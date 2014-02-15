@@ -1,4 +1,2 @@
-go-geohash
-==========
-
 Go Geohash
+==========
