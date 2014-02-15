@@ -1,12 +1,12 @@
 package geohash
 
 import (
+	"bytes"
 	"fmt"
-	"strings"
 )
 
-const (
-	base32 = "0123456789bcdefghjkmnpqrstuvwxyz"
+var (
+	base32 = []byte("0123456789bcdefghjkmnpqrstuvwxyz")
 )
 
 func Encode(lat, lon float64, precision int) (string, error) {
@@ -18,10 +18,10 @@ func Decode(gh string) (box Box, err error) {
 	box = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
 
 	even := true
-	for i, c := range gh {
-		v := strings.IndexRune(base32, c)
+	for i := 0; i < len(gh); i++ {
+		v := bytes.IndexByte(base32, gh[i])
 		if v == -1 {
-			err = fmt.Errorf("invalid character '%c' at index %d", c, i)
+			err = fmt.Errorf("invalid character at index %d", i)
 			return
 		}
 

@@ -20,3 +20,9 @@ func TestDecodeInvalidRune(t *testing.T) {
 		t.Fatal("no error")
 	}
 }
+
+func BenchmarkDecode(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Decode("ezs42")
+	}
+}
