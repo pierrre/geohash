@@ -40,7 +40,7 @@ func TestDecode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !box.IsPointInside(testPoint) {
+	if !(pointIsInsideBox(testPoint, box)) {
 		t.Fatal("point is outside")
 	}
 }
@@ -127,4 +127,13 @@ func BenchmarkBroadyDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		broady_geohash.Decode(testGeohash)
 	}
+}
+
+func pointIsInsideBox(p Point, b Box) bool {
+	return valueIsInsideRange(p.Lat, b.Lat) &&
+		valueIsInsideRange(p.Lon, b.Lon)
+}
+
+func valueIsInsideRange(v float64, r Range) bool {
+	return v >= r.Min && v <= r.Max
 }
