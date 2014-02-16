@@ -2,6 +2,7 @@ package geohash
 
 import (
 	"fmt"
+	"math"
 	"strings"
 )
 
@@ -82,6 +83,10 @@ func (b Box) Center() Point {
 	return Point{Lat: b.Lat.Mid(), Lon: b.Lon.Mid()}
 }
 
+func (b Box) Round() Point {
+	return Point{Lat: b.Lat.Round(), Lon: b.Lon.Round()}
+}
+
 func (b Box) IsPointInside(p Point) bool {
 	return b.Lat.IsInside(p.Lat) &&
 		b.Lon.IsInside(p.Lon)
@@ -95,8 +100,20 @@ type Range struct {
 	Min, Max float64
 }
 
+func (r Range) Val() float64 {
+	return math.Abs(r.Max - r.Min)
+}
+
 func (r Range) Mid() float64 {
 	return (r.Min + r.Max) / 2
+}
+
+func (r Range) Round() float64 {
+	dec := int(math.Floor(-math.Log10(r.Val())))
+	if dec < 0 {
+		dec = 0
+	}
+	return roundDecimal(r.Mid(), dec)
 }
 
 func (r Range) IsInside(v float64) bool {

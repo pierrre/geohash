@@ -36,7 +36,6 @@ func TestDecode(t *testing.T) {
 	if !box.IsPointInside(testPoint) {
 		t.Fatal("point is outside")
 	}
-	box.Lat.Round()
 }
 
 func TestDecodeInvalidCharacter(t *testing.T) {
