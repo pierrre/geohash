@@ -6,25 +6,48 @@ import (
 )
 
 var (
-	base32 = []byte("0123456789bcdefghjkmnpqrstuvwxyz")
+	base32     = []byte("0123456789bcdefghjkmnpqrstuvwxyz")
+	defaultBox = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
 )
 
-func Encode(lat, lon float64, precision int) (string, error) {
-	//TODO
-	return "", nil
+func Encode(lat, lon float64, precision int) string {
+	ghb := make([]byte, precision)
+	box := defaultBox
+	even := true
+	for i := 0; i < precision; i++ {
+		ci := 0
+		for j := 16; j != 0; j >>= 1 {
+			var r *Range
+			var u float64
+			if even {
+				r = &box.Lon
+				u = lon
+			} else {
+				r = &box.Lat
+				u = lat
+			}
+			if mid := r.Mid(); u > mid {
+				ci += j
+				r.Min = mid
+			} else {
+				r.Max = mid
+			}
+			even = !even
+		}
+		ghb[i] += base32[ci]
+	}
+	return string(ghb)
 }
 
 func Decode(gh string) (box Box, err error) {
-	box = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
-
+	box = defaultBox
 	even := true
 	for i := 0; i < len(gh); i++ {
-		v := bytes.IndexByte(base32, gh[i])
-		if v == -1 {
+		ci := bytes.IndexByte(base32, gh[i])
+		if ci == -1 {
 			err = fmt.Errorf("invalid character at index %d", i)
 			return
 		}
-
 		for j := 16; j != 0; j >>= 1 {
 			var r *Range
 			if even {
@@ -32,19 +55,15 @@ func Decode(gh string) (box Box, err error) {
 			} else {
 				r = &box.Lat
 			}
-
-			var u *float64
-			if v&j != 0 {
-				u = &r.Min
+			mid := r.Mid()
+			if ci&j != 0 {
+				r.Min = mid
 			} else {
-				u = &r.Max
+				r.Max = mid
 			}
-			*u = r.Mid()
-
 			even = !even
 		}
 	}
-
 	return
 }
 
