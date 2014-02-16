@@ -55,8 +55,7 @@ func Decode(gh string) (box Box, err error) {
 			} else {
 				r = &box.Lat
 			}
-			mid := r.Mid()
-			if ci&j != 0 {
+			if mid := r.Mid(); ci&j != 0 {
 				r.Min = mid
 			} else {
 				r.Max = mid
