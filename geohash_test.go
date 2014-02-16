@@ -50,15 +50,15 @@ func BenchmarkDecode(b *testing.B) {
 	}
 }
 
-func BenchmarkBroadyEncode(b *testing.B) {
+func BenchmarkCodeforEncode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		broady_geohash.Encode(testPoint.Lat, testPoint.Lon)
+		codefor_geohash.Encode(testPoint.Lat, testPoint.Lon)
 	}
 }
 
-func BenchmarkBroadyDecode(b *testing.B) {
+func BenchmarkCodeforDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		broady_geohash.Decode(testGeohash)
+		codefor_geohash.Decode(testGeohash)
 	}
 }
 
@@ -94,14 +94,14 @@ func BenchmarkThe42CartconvertDecode(b *testing.B) {
 	}
 }
 
-func BenchmarkCodeforEncode(b *testing.B) {
+func BenchmarkBroadyEncode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		codefor_geohash.Encode(testPoint.Lat, testPoint.Lon)
+		broady_geohash.Encode(testPoint.Lat, testPoint.Lon)
 	}
 }
 
-func BenchmarkCodeforDecode(b *testing.B) {
+func BenchmarkBroadyDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		codefor_geohash.Decode(testGeohash)
+		broady_geohash.Decode(testGeohash)
 	}
 }
