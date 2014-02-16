@@ -6,7 +6,6 @@ import (
 )
 
 var (
-	bits       = [5]int{1 << 4, 1 << 3, 1 << 2, 1 << 1, 1 << 0}
 	base32     = "0123456789bcdefghjkmnpqrstuvwxyz"
 	defaultBox = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
 )
@@ -17,7 +16,7 @@ func Encode(lat, lon float64, precision int) string {
 	even := true
 	for i := 0; i < precision; i++ {
 		ci := 0
-		for j := 0; j < len(bits); j++ {
+		for mask := 1 << 4; mask != 0; mask >>= 1 {
 			var r *Range
 			var u float64
 			if even {
@@ -28,7 +27,7 @@ func Encode(lat, lon float64, precision int) string {
 				u = lat
 			}
 			if mid := r.Mid(); u > mid {
-				ci += bits[j]
+				ci += mask
 				r.Min = mid
 			} else {
 				r.Max = mid
@@ -49,14 +48,14 @@ func Decode(gh string) (box Box, err error) {
 			err = fmt.Errorf("invalid character at index %d", i)
 			return
 		}
-		for j := 0; j < len(bits); j++ {
+		for mask := 1 << 4; mask != 0; mask >>= 1 {
 			var r *Range
 			if even {
 				r = &box.Lon
 			} else {
 				r = &box.Lat
 			}
-			if mid := r.Mid(); ci&bits[j] != 0 {
+			if mid := r.Mid(); ci&mask != 0 {
 				r.Min = mid
 			} else {
 				r.Max = mid
