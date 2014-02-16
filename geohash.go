@@ -6,12 +6,20 @@ import (
 )
 
 var (
-	base32     = "0123456789bcdefghjkmnpqrstuvwxyz"
-	defaultBox = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
+	base32           = "0123456789bcdefghjkmnpqrstuvwxyz"
+	defaultBox       = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
+	ghbNotThreadSafe = make([]byte, 1024)
 )
 
 func Encode(lat, lon float64, precision int) string {
-	ghb := make([]byte, precision)
+	return encode(lat, lon, precision, make([]byte, precision))
+}
+
+func EncodeNotThreadSafe(lat, lon float64, precision int) string {
+	return encode(lat, lon, precision, ghbNotThreadSafe[:precision])
+}
+
+func encode(lat, lon float64, precision int, ghb []byte) string {
 	box := defaultBox
 	even := true
 	for i := 0; i < precision; i++ {

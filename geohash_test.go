@@ -21,6 +21,13 @@ func TestEncode(t *testing.T) {
 	}
 }
 
+func TestEncodeNotThreadSafe(t *testing.T) {
+	gh := EncodeNotThreadSafe(testPoint.Lat, testPoint.Lon, testPrecision)
+	if gh != testGeohash {
+		t.Fatal("wrong geohash")
+	}
+}
+
 func TestDecode(t *testing.T) {
 	box, err := Decode(testGeohash)
 	if err != nil {
@@ -41,6 +48,12 @@ func TestDecodeInvalidCharacter(t *testing.T) {
 func BenchmarkEncode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Encode(testPoint.Lat, testPoint.Lon, testPrecision)
+	}
+}
+
+func BenchmarkEncodeNotThreadSafe(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		EncodeNotThreadSafe(testPoint.Lat, testPoint.Lon, testPrecision)
 	}
 }
 
