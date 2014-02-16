@@ -12,6 +12,19 @@ var (
 	ghbNotThreadSafe = make([]byte, 1024)
 )
 
+func EncodeAuto(lat, lon float64) string {
+	var gh string
+	for precision := 1; precision <= 50; precision++ {
+		gh = Encode(lat, lon, precision)
+		b, _ := Decode(gh)
+		p := b.Round()
+		if p.Lat == lat && p.Lon == lon {
+			break
+		}
+	}
+	return gh
+}
+
 func Encode(lat, lon float64, precision int) string {
 	return encode(lat, lon, precision, make([]byte, precision))
 }
@@ -35,7 +48,7 @@ func encode(lat, lon float64, precision int, ghb []byte) string {
 				r = &box.Lat
 				u = lat
 			}
-			if mid := r.Mid(); u > mid {
+			if mid := r.Mid(); u >= mid {
 				ci += mask
 				r.Min = mid
 			} else {

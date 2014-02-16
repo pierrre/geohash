@@ -14,6 +14,13 @@ var (
 	testPrecision = 12
 )
 
+func TestEncodeAuto(t *testing.T) {
+	gh := EncodeAuto(testPoint.Lat, testPoint.Lon)
+	if gh != testGeohash[:7] {
+		t.Fatal("wrong geohash")
+	}
+}
+
 func TestEncode(t *testing.T) {
 	gh := Encode(testPoint.Lat, testPoint.Lon, testPrecision)
 	if gh != testGeohash {
