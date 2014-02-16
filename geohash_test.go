@@ -34,119 +34,14 @@ func TestDecodeInvalidCharacter(t *testing.T) {
 	}
 }
 
-func BenchmarkEncode0(b *testing.B) {
-	benchmarkEncode(b, 0)
-}
-
-func BenchmarkEncode1(b *testing.B) {
-	benchmarkEncode(b, 1)
-}
-
-func BenchmarkEncode2(b *testing.B) {
-	benchmarkEncode(b, 2)
-}
-
-func BenchmarkEncode3(b *testing.B) {
-	benchmarkEncode(b, 3)
-}
-
-func BenchmarkEncode4(b *testing.B) {
-	benchmarkEncode(b, 4)
-}
-
-func BenchmarkEncode5(b *testing.B) {
-	benchmarkEncode(b, 5)
-}
-
-func BenchmarkEncode6(b *testing.B) {
-	benchmarkEncode(b, 6)
-}
-
-func BenchmarkEncode7(b *testing.B) {
-	benchmarkEncode(b, 7)
-}
-
-func BenchmarkEncode8(b *testing.B) {
-	benchmarkEncode(b, 8)
-}
-
-func BenchmarkEncode9(b *testing.B) {
-	benchmarkEncode(b, 9)
-}
-
-func BenchmarkEncode10(b *testing.B) {
-	benchmarkEncode(b, 10)
-}
-
-func BenchmarkEncode11(b *testing.B) {
-	benchmarkEncode(b, 11)
-}
-
-func BenchmarkEncode12(b *testing.B) {
-	benchmarkEncode(b, 12)
-}
-
-func benchmarkEncode(b *testing.B, precision int) {
+func BenchmarkEncode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Encode(testPoint.Lat, testPoint.Lon, precision)
+		Encode(testPoint.Lat, testPoint.Lon, testPrecision)
 	}
 }
 
-func BenchmarkDecode0(b *testing.B) {
-	benchmarDecode(b, 0)
-}
-
-func BenchmarkDecode1(b *testing.B) {
-	benchmarDecode(b, 1)
-}
-
-func BenchmarkDecode2(b *testing.B) {
-	benchmarDecode(b, 2)
-}
-
-func BenchmarkDecode3(b *testing.B) {
-	benchmarDecode(b, 3)
-}
-
-func BenchmarkDecode4(b *testing.B) {
-	benchmarDecode(b, 4)
-}
-
-func BenchmarkDecode5(b *testing.B) {
-	benchmarDecode(b, 5)
-}
-
-func BenchmarkDecode6(b *testing.B) {
-	benchmarDecode(b, 6)
-}
-
-func BenchmarkDecode7(b *testing.B) {
-	benchmarDecode(b, 7)
-}
-
-func BenchmarkDecode8(b *testing.B) {
-	benchmarDecode(b, 8)
-}
-
-func BenchmarkDecode9(b *testing.B) {
-	benchmarDecode(b, 9)
-}
-
-func BenchmarkDecode10(b *testing.B) {
-	benchmarDecode(b, 10)
-}
-
-func BenchmarkDecode11(b *testing.B) {
-	benchmarDecode(b, 11)
-}
-
-func BenchmarkDecode12(b *testing.B) {
-	benchmarDecode(b, 12)
-}
-
-func benchmarDecode(b *testing.B, precision int) {
-	gh := testGeohash[:precision]
+func BenchmarkDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Decode(gh)
+		Decode(testGeohash)
 	}
 }
