@@ -1,5 +1,10 @@
-// Package geohash provides an implementation of geohash
-// http://en.wikipedia.com/wiki/Geohash
+/*
+Package geohash provides an implementation of geohash.
+
+http://en.wikipedia.com/wiki/Geohash
+
+http://geohash.org
+*/
 package geohash
 
 import (
@@ -14,7 +19,7 @@ var (
 	ghbNotThreadSafe = make([]byte, 1024)
 )
 
-// EncodeAuto encodes a location to a geohash using the most suitable precision
+// EncodeAuto encodes a location to a geohash using the most suitable precision.
 func EncodeAuto(lat, lon float64) string {
 	var gh string
 	for precision := 1; precision <= 50; precision++ {
@@ -28,13 +33,16 @@ func EncodeAuto(lat, lon float64) string {
 	return gh
 }
 
-// Encode encodes a location to a geohash
+// Encode encodes a location to a geohash.
 func Encode(lat, lon float64, precision int) string {
 	return encode(lat, lon, precision, make([]byte, precision))
 }
 
-// EncodeNotThreadSafe encodes a location to a geohash
-// It is a little bit faster than Encode, but is not thread safe
+/*
+EncodeNotThreadSafe encodes a location to a geohash.
+
+It is a little bit faster than Encode, but is not thread safe.
+*/
 func EncodeNotThreadSafe(lat, lon float64, precision int) string {
 	return encode(lat, lon, precision, ghbNotThreadSafe[:precision])
 }
@@ -67,7 +75,7 @@ func encode(lat, lon float64, precision int, ghb []byte) string {
 	return string(ghb)
 }
 
-// Decode decode a geohash to a Box
+// Decode decode a geohash to a Box.
 func Decode(gh string) (box Box, err error) {
 	box = defaultBox
 	even := true
@@ -95,49 +103,52 @@ func Decode(gh string) (box Box, err error) {
 	return
 }
 
-// Box is a spatial data structure
-//
-// It is defined by lat/lon min/max.
+/*
+Box is a spatial data structure.
+
+It is defined by 2 ranges of latitude/longitude.
+*/
 type Box struct {
 	Lat, Lon Range
 }
 
-// Center returns the Box's center as a Point
+// Center returns the Box's center as a Point.
 func (b Box) Center() Point {
 	return Point{Lat: b.Lat.Mid(), Lon: b.Lon.Mid()}
 }
 
-// Round returns the Box's approximate location as a Point
+// Round returns the Box's approximate location as a Point.
 //
-// It uses decimal rounding.
-// It is in general more useful than Center.
+// It uses decimal rounding and is in general more useful than Center.
 func (b Box) Round() Point {
 	return Point{Lat: b.Lat.Round(), Lon: b.Lon.Round()}
 }
 
-// Point represents a location
+// Point represents a location (latitude and longitude).
 type Point struct {
 	Lat, Lon float64
 }
 
-// Range represents a tuple of value
+// Range represents a range (min/max) on latitude or longitude.
 type Range struct {
 	Min, Max float64
 }
 
-// Val return the difference between Min and Max
+// Val returns the difference between Min and Max.
 func (r Range) Val() float64 {
 	return math.Abs(r.Max - r.Min)
 }
 
-// Mid return the middle value between Min and Max
+// Mid return the middle value between Min and Max.
 func (r Range) Mid() float64 {
 	return (r.Min + r.Max) / 2
 }
 
-// Round returns the rounded value between Min and Max
-//
-// It uses decimal rounding.
+/*
+Round returns the rounded value between Min and Max.
+
+It uses decimal rounding.
+*/
 func (r Range) Round() float64 {
 	dec := int(math.Floor(-math.Log10(r.Val())))
 	if dec < 0 {
