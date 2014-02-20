@@ -22,7 +22,7 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Print(strings.Join(results, " "))
+	fmt.Println(strings.Join(results, " "))
 }
 
 func processArgs(args []string, precision int) ([]string, error) {
