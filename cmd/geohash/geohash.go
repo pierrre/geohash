@@ -40,9 +40,8 @@ func processArgs(args []string, precision int) ([]string, error) {
 func processArg(arg string, precision int) (string, error) {
 	if strings.Contains(arg, ",") {
 		return processArgLatLon(arg, precision)
-	} else {
-		return processArgGeohash(arg)
 	}
+	return processArgGeohash(arg)
 }
 
 func processArgLatLon(arg string, precision int) (string, error) {
