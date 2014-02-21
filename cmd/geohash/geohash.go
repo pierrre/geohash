@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/pierrre/geohash"
 	"strconv"
 	"strings"
+
+	"github.com/pierrre/geohash"
 )
 
 func main() {

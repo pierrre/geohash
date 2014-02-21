@@ -1,11 +1,12 @@
 package geohash
 
 import (
+	"testing"
+
 	codefor_geohash "github.com/Codefor/geohash"
 	broady_geohash "github.com/broady/gogeohash"
 	//gnagel_geohash "github.com/gnagel/go-geohash/ggeohash"
 	the42_cartconvert_geohash "github.com/the42/cartconvert/cartconvert"
-	"testing"
 )
 
 func BenchmarkEncode(b *testing.B) {
