@@ -6,19 +6,26 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/pierrre/geohash"
+	. "github.com/pierrre/geohash"
 )
 
-func main() {
-	var precision int
-	flag.IntVar(&precision, "precision", 0, "Precision")
-	flag.Parse()
+var (
+	precision int
+	round     bool
+)
 
+func init() {
+	flag.IntVar(&precision, "precision", 0, "Precision")
+	flag.BoolVar(&round, "round", true, "Round")
+	flag.Parse()
+}
+
+func main() {
 	if flag.NArg() == 0 {
 		flag.Usage()
 	}
 
-	results, err := processArgs(flag.Args(), precision)
+	results, err := processArgs(flag.Args())
 	if err != nil {
 		panic(err)
 	}
@@ -26,10 +33,10 @@ func main() {
 	fmt.Println(strings.Join(results, " "))
 }
 
-func processArgs(args []string, precision int) ([]string, error) {
+func processArgs(args []string) ([]string, error) {
 	var results []string
 	for _, arg := range flag.Args() {
-		result, err := processArg(arg, precision)
+		result, err := processArg(arg)
 		if err != nil {
 			return nil, err
 		}
@@ -38,14 +45,14 @@ func processArgs(args []string, precision int) ([]string, error) {
 	return results, nil
 }
 
-func processArg(arg string, precision int) (string, error) {
+func processArg(arg string) (string, error) {
 	if strings.Contains(arg, ",") {
-		return processArgLatLon(arg, precision)
+		return processArgLatLon(arg)
 	}
 	return processArgGeohash(arg)
 }
 
-func processArgLatLon(arg string, precision int) (string, error) {
+func processArgLatLon(arg string) (string, error) {
 	latLon := strings.Split(arg, ",")
 	if len(latLon) != 2 {
 		return "", fmt.Errorf("'%s'' is not a valid location (lat,lon)", arg)
@@ -63,20 +70,25 @@ func processArgLatLon(arg string, precision int) (string, error) {
 
 	var gh string
 	if precision > 0 {
-		gh = geohash.Encode(lat, lon, precision)
+		gh = Encode(lat, lon, precision)
 	} else {
-		gh = geohash.EncodeAuto(lat, lon)
+		gh = EncodeAuto(lat, lon)
 	}
 	return gh, nil
 }
 
 func processArgGeohash(arg string) (string, error) {
-	box, err := geohash.Decode(arg)
+	box, err := Decode(arg)
 	if err != nil {
 		return "", err
 	}
 
-	round := box.Round()
+	var p Point
+	if round {
+		p = box.Round()
+	} else {
+		p = box.Center()
+	}
 
-	return fmt.Sprintf("%v,%v", round.Lat, round.Lon), nil
+	return fmt.Sprintf("%v,%v", p.Lat, p.Lon), nil
 }
