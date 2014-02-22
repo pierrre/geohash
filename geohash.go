@@ -82,7 +82,7 @@ func Decode(gh string) (box Box, err error) {
 	for i := 0; i < len(gh); i++ {
 		ci := strings.IndexByte(base32, gh[i])
 		if ci == -1 {
-			err = fmt.Errorf("invalid character at index %d", i)
+			err = fmt.Errorf("geohash decode '%s': invalid character at index %d", gh, i)
 			return
 		}
 		for mask := 1 << 4; mask != 0; mask >>= 1 {

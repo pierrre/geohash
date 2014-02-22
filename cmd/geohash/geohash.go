@@ -1,90 +1,115 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
-	. "github.com/pierrre/geohash"
+	"github.com/pierrre/geohash"
 )
 
 var (
-	precision int
-	round     bool
+	flagPrecision int
+	flagRound     bool
 )
 
 func init() {
-	flag.IntVar(&precision, "precision", 0, "Precision")
-	flag.BoolVar(&round, "round", true, "Round")
+	flag.IntVar(&flagPrecision, "precision", 0, "Precision")
+	flag.BoolVar(&flagRound, "round", true, "Round")
 	flag.Parse()
 }
 
 func main() {
-	if flag.NArg() == 0 {
-		flag.Usage()
-	}
-
-	results, err := processArgs(flag.Args())
-	if err != nil {
+	if err := processSwitch(); err != nil {
 		panic(err)
 	}
-
-	fmt.Println(strings.Join(results, " "))
 }
 
-func processArgs(args []string) ([]string, error) {
+func processSwitch() error {
+	if flag.NArg() > 0 {
+		return processArgs()
+	}
+	return processStdin()
+}
+
+func processArgs() error {
 	var results []string
 	for _, arg := range flag.Args() {
-		result, err := processArg(arg)
+		result, err := processValue(arg)
 		if err != nil {
-			return nil, err
+			return err
 		}
 		results = append(results, result)
 	}
-	return results, nil
+	fmt.Println(strings.Join(results, " "))
+	return nil
 }
 
-func processArg(arg string) (string, error) {
-	if strings.Contains(arg, ",") {
-		return processArgLatLon(arg)
+func processStdin() error {
+	first := true
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Split(bufio.ScanWords)
+	for scanner.Scan() {
+		result, err := processValue(scanner.Text())
+		if err != nil {
+			return err
+		}
+		if first {
+			first = false
+		} else {
+			fmt.Print(" ")
+		}
+		fmt.Print(result)
 	}
-	return processArgGeohash(arg)
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+	return nil
 }
 
-func processArgLatLon(arg string) (string, error) {
-	latLon := strings.Split(arg, ",")
-	if len(latLon) != 2 {
-		return "", fmt.Errorf("'%s'' is not a valid location (lat,lon)", arg)
+func processValue(v string) (string, error) {
+	if strings.Contains(v, ",") {
+		return processLatLon(v)
+	}
+	return processGeohash(v)
+}
+
+func processLatLon(latLon string) (string, error) {
+	latLonSplit := strings.Split(latLon, ",")
+	if len(latLonSplit) != 2 {
+		return "", fmt.Errorf("'%s'' is not a valid location (lat,lon)", latLon)
 	}
 
-	lat, err := strconv.ParseFloat(latLon[0], 64)
+	lat, err := strconv.ParseFloat(latLonSplit[0], 64)
 	if err != nil {
 		return "", err
 	}
 
-	lon, err := strconv.ParseFloat(latLon[1], 64)
+	lon, err := strconv.ParseFloat(latLonSplit[1], 64)
 	if err != nil {
 		return "", err
 	}
 
 	var gh string
-	if precision > 0 {
-		gh = Encode(lat, lon, precision)
+	if flagPrecision > 0 {
+		gh = geohash.Encode(lat, lon, flagPrecision)
 	} else {
-		gh = EncodeAuto(lat, lon)
+		gh = geohash.EncodeAuto(lat, lon)
 	}
 	return gh, nil
 }
 
-func processArgGeohash(arg string) (string, error) {
-	box, err := Decode(arg)
+func processGeohash(arg string) (string, error) {
+	box, err := geohash.Decode(arg)
 	if err != nil {
 		return "", err
 	}
 
-	var p Point
-	if round {
+	var p geohash.Point
+	if flagRound {
 		p = box.Round()
 	} else {
 		p = box.Center()
