@@ -1,3 +1,38 @@
+/*
+Geohash command-line.
+
+Usage
+
+Encode lat/lon to geohash:
+	geohash 48.86,2.35
+
+	u09tvqx
+
+Decode geohash to lat/lon:
+	geohash u09tvqx
+
+	48.86,2.35
+
+Custom precision:
+	geohash -precision=12 48.86,2.35
+
+	u09tvqxnnuph
+
+Don't round:
+	geohash -round=false u09tvqx
+
+	48.85963439941406,2.3503875732421875
+
+Multiple arguments:
+	geohash 35.691015,139.766014 u09tvqx
+
+	xn77h3qe0pmt 48.86,2.35
+
+Stdin:
+	echo "u09tvqx" | geohash
+
+	48.86,2.35
+*/
 package main
 
 import (
