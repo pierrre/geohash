@@ -9,27 +9,35 @@ import (
 )
 
 func BenchmarkEncode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Encode(testPoint.Lat, testPoint.Lon, testPrecision)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Encode(testPoint.Lat, testPoint.Lon, testPrecision)
+		}
+	})
 }
 
 func BenchmarkDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Decode(testGeohash)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			Decode(testGeohash)
+		}
+	})
 }
 
 func BenchmarkCodeforEncode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		codefor_geohash.Encode(testPoint.Lat, testPoint.Lon)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			codefor_geohash.Encode(testPoint.Lat, testPoint.Lon)
+		}
+	})
 }
 
 func BenchmarkCodeforDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		codefor_geohash.Decode(testGeohash)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			codefor_geohash.Decode(testGeohash)
+		}
+	})
 }
 
 func BenchmarkThe42CartconvertEncode(b *testing.B) {
@@ -40,25 +48,33 @@ func BenchmarkThe42CartconvertEncode(b *testing.B) {
 		El:        the42_cartconvert_geohash.DefaultEllipsoid,
 	}
 	precision := byte(testPrecision)
-	for i := 0; i < b.N; i++ {
-		the42_cartconvert_geohash.LatLongToGeoHashBits(pc, precision)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			the42_cartconvert_geohash.LatLongToGeoHashBits(pc, precision)
+		}
+	})
 }
 
 func BenchmarkThe42CartconvertDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		the42_cartconvert_geohash.GeoHashToLatLong(testGeohash, the42_cartconvert_geohash.DefaultEllipsoid)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			the42_cartconvert_geohash.GeoHashToLatLong(testGeohash, the42_cartconvert_geohash.DefaultEllipsoid)
+		}
+	})
 }
 
 func BenchmarkBroadyEncode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		broady_geohash.Encode(testPoint.Lat, testPoint.Lon)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			broady_geohash.Encode(testPoint.Lat, testPoint.Lon)
+		}
+	})
 }
 
 func BenchmarkBroadyDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		broady_geohash.Decode(testGeohash)
-	}
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			broady_geohash.Decode(testGeohash)
+		}
+	})
 }
