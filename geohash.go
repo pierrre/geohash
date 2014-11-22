@@ -63,14 +63,13 @@ func Encode(lat, lon float64, precision int) string {
 }
 
 // Decode decode a geohash to a Box.
-func Decode(gh string) (box Box, err error) {
-	box = defaultBox
+func Decode(gh string) (Box, error) {
+	box := defaultBox
 	even := true
 	for i := 0; i < len(gh); i++ {
 		ci := strings.IndexByte(base32, gh[i])
 		if ci == -1 {
-			err = fmt.Errorf("geohash decode '%s': invalid character at index %d", gh, i)
-			return
+			return box, fmt.Errorf("geohash decode '%s': invalid character at index %d", gh, i)
 		}
 		for mask := 1 << 4; mask != 0; mask >>= 1 {
 			var r *Range
@@ -87,7 +86,7 @@ func Decode(gh string) (box Box, err error) {
 			even = !even
 		}
 	}
-	return
+	return box, nil
 }
 
 /*
