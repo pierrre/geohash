@@ -5,7 +5,6 @@ import (
 
 	codefor_geohash "github.com/Codefor/geohash"
 	broady_geohash "github.com/broady/gogeohash"
-	//gnagel_geohash "github.com/gnagel/go-geohash/ggeohash"
 	the42_cartconvert_geohash "github.com/the42/cartconvert/cartconvert"
 )
 
@@ -32,22 +31,6 @@ func BenchmarkCodeforDecode(b *testing.B) {
 		codefor_geohash.Decode(testGeohash)
 	}
 }
-
-//This test is disabled because the project contains a directory (example-scripts) with a wrong import (./go_geohash)
-/*
-func BenchmarkGnagelEncode(b *testing.B) {
-	precision := uint8(testPrecision)
-	for i := 0; i < b.N; i++ {
-		gnagel_geohash.Encode(testPoint.Lat, testPoint.Lon, precision)
-	}
-}
-
-func BenchmarkGnagelDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		gnagel_geohash.DecodeBoundBox(testGeohash)
-	}
-}
-*/
 
 func BenchmarkThe42CartconvertEncode(b *testing.B) {
 	pc := &the42_cartconvert_geohash.PolarCoord{
