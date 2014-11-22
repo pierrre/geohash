@@ -24,13 +24,6 @@ func TestEncode(t *testing.T) {
 	}
 }
 
-func TestEncodeNotThreadSafe(t *testing.T) {
-	gh := EncodeNotThreadSafe(testPoint.Lat, testPoint.Lon, testPrecision)
-	if gh != testGeohash {
-		t.Fatal("wrong geohash")
-	}
-}
-
 func TestDecode(t *testing.T) {
 	box, err := Decode(testGeohash)
 	if err != nil {

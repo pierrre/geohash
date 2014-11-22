@@ -14,9 +14,8 @@ import (
 )
 
 var (
-	base32           = "0123456789bcdefghjkmnpqrstuvwxyz"
-	defaultBox       = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
-	ghbNotThreadSafe = make([]byte, 1024)
+	base32     = "0123456789bcdefghjkmnpqrstuvwxyz"
+	defaultBox = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
 )
 
 // EncodeAuto encodes a location to a geohash using the most suitable precision.
@@ -35,19 +34,7 @@ func EncodeAuto(lat, lon float64) string {
 
 // Encode encodes a location to a geohash.
 func Encode(lat, lon float64, precision int) string {
-	return encode(lat, lon, precision, make([]byte, precision))
-}
-
-/*
-EncodeNotThreadSafe encodes a location to a geohash.
-
-It is a little bit faster than Encode, but is not thread safe.
-*/
-func EncodeNotThreadSafe(lat, lon float64, precision int) string {
-	return encode(lat, lon, precision, ghbNotThreadSafe[:precision])
-}
-
-func encode(lat, lon float64, precision int, ghb []byte) string {
+	ghb := make([]byte, precision)
 	box := defaultBox
 	even := true
 	for i := 0; i < precision; i++ {

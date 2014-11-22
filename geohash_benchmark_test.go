@@ -15,12 +15,6 @@ func BenchmarkEncode(b *testing.B) {
 	}
 }
 
-func BenchmarkEncodeNotThreadSafe(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		EncodeNotThreadSafe(testPoint.Lat, testPoint.Lon, testPrecision)
-	}
-}
-
 func BenchmarkDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Decode(testGeohash)
