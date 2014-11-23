@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	codefor_geohash "github.com/Codefor/geohash"
+	tomi_hiltunen_geohash "github.com/TomiHiltunen/geohash-golang"
 	broady_geohash "github.com/broady/gogeohash"
 	the42_cartconvert_geohash "github.com/the42/cartconvert/cartconvert"
 )
@@ -36,6 +37,22 @@ func BenchmarkCodeforDecode(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			codefor_geohash.Decode(testGeohash)
+		}
+	})
+}
+
+func BenchmarkTomiHiltunenEncode(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			tomi_hiltunen_geohash.Encode(testPoint.Lat, testPoint.Lon)
+		}
+	})
+}
+
+func BenchmarkTomiHiltunenDecode(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			tomi_hiltunen_geohash.Decode(testGeohash)
 		}
 	})
 }
