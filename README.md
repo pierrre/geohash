@@ -1,7 +1,7 @@
 # Geohash
 A geohash library for Go (Golang)
 
-[![Build Status](https://travis-ci.org/pierrre/geohash.png?branch=master)](https://travis-ci.org/pierrre/geohash)
+[![Build Status](https://travis-ci.org/pierrre/geohash.svg?branch=master)](https://travis-ci.org/pierrre/geohash)
 
 ## Features
 - Encode latitude/longitude to geohash
@@ -10,12 +10,6 @@ A geohash library for Go (Golang)
 - Commande-line tool
 
 ## Documentation
-http://godoc.org/github.com/pierrre/geohash
+https://godoc.org/github.com/pierrre/geohash
 
-Command-line: http://godoc.org/github.com/pierrre/geohash/cmd/geohash
-
-## Install
-```
-go get github.com/pierrre/geohash/...
-```
-(It will also install the commande-line tool)
+Command-line: https://godoc.org/github.com/pierrre/geohash/cmd/geohash
