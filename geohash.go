@@ -110,16 +110,6 @@ func (b Box) Round() Point {
 	return Point{Lat: b.Lat.Round(), Lon: b.Lon.Round()}
 }
 
-// The height of the box
-func (b Box) Height() float64 {
-	return b.Lat.Max - b.Lat.Min
-}
-
-// The width of the box
-func (b Box) Width() float64 {
-	return b.Lon.Max - b.Lon.Min
-}
-
 // Point represents a location (latitude and longitude).
 type Point struct {
 	Lat, Lon float64
@@ -174,13 +164,13 @@ func GetNeighbors(gh string) (Neighbors, error) {
 	precision := len(gh)
 
 	return Neighbors{
-		North: Encode(box.Lat.Mid()+box.Height(), box.Lon.Mid(), precision),
-		NorthEast: Encode(box.Lat.Mid()+box.Height(), box.Lon.Mid()+box.Width(), precision),
-		East: Encode(box.Lat.Mid(), box.Lon.Mid()+box.Width(), precision),
-		SouthEast: Encode(box.Lat.Mid()-box.Height(), box.Lon.Mid()+box.Width(), precision),
-		South: Encode(box.Lat.Mid()-box.Height(), box.Lon.Mid(), precision),
-		SouthWest: Encode(box.Lat.Mid()-box.Height(), box.Lon.Mid()-box.Width(), precision),
-		West: Encode(box.Lat.Mid(), box.Lon.Mid()-box.Width(), precision),
-		NorthWest: Encode(box.Lat.Mid()+box.Height(), box.Lon.Mid()-box.Width(), precision),
+		North: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid(), precision),
+		NorthEast: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid()+box.Lon.Val(), precision),
+		East: Encode(box.Lat.Mid(), box.Lon.Mid()+box.Lon.Val(), precision),
+		SouthEast: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid()+box.Lon.Val(), precision),
+		South: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid(), precision),
+		SouthWest: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid()-box.Lon.Val(), precision),
+		West: Encode(box.Lat.Mid(), box.Lon.Mid()-box.Lon.Val(), precision),
+		NorthWest: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid()-box.Lon.Val(), precision),
 	}, nil
 }

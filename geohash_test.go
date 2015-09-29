@@ -91,44 +91,6 @@ func testValueIsInsideRange(v float64, r Range) bool {
 	return v >= r.Min && v <= r.Max
 }
 
-func TestHeight(t *testing.T) {
-	box := Box{
-		Lat: Range{
-			Min: testPoint.Lat - 1,
-			Max: testPoint.Lat + 1,
-		},
-		Lon: Range{
-			Min: testPoint.Lon - 1,
-			Max: testPoint.Lon + 1,
-		},
-	}
-
-	height := box.Height()
-
-	if height != 2 {
-		t.Fatal("height is not calculated correctly")
-	}
-}
-
-func TestWidth(t *testing.T) {
-	box := Box{
-		Lat: Range{
-			Min: testPoint.Lat - 1,
-			Max: testPoint.Lat + 1,
-		},
-		Lon: Range{
-			Min: testPoint.Lon - 1,
-			Max: testPoint.Lon + 1,
-		},
-	}
-
-	width := box.Width()
-
-	if width != 2 {
-		t.Fatal("width is not calculated correctly")
-	}
-}
-
 func TestNeighborsInvalidCharacter(t *testing.T) {
 	_, err := GetNeighbors("é")
 	if err == nil {
