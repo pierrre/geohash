@@ -153,40 +153,34 @@ func (r Range) Round() float64 {
 	return roundDecimal(r.Mid(), dec)
 }
 
-// Return the neighbors of the supplied geohash. They are returned as a slice,
-// starting at the neighbor to the north, and going around clockwise with the
-// last being the neighbor to the northwest. See diagram below:
-//
-// 7  0  1
-// 6  x  2
-// 5  4  3
+type Neighbors struct {
+	North     string
+	NorthEast string
+	East      string
+	SouthEast string
+	South     string
+	SouthWest string
+	West      string
+	NorthWest string
+}
 
-func Neighbors(gh string) ([]string, error) {
-	neighbors := make([]string, 8)
-
+// Return the neighbors of the supplied geohash.
+func GetNeighbors(gh string) (Neighbors, error) {
 	box, err := Decode(gh)
 
 	if err != nil {
-		return nil, err
+		return Neighbors{}, err
 	}
 	precision := len(gh)
 
-	// North
-	neighbors[0] = Encode(box.Lat.Mid() + box.Height(), box.Lon.Mid(), precision)
-	// NorthEast
-	neighbors[1] = Encode(box.Lat.Mid() + box.Height(), box.Lon.Mid() + box.Width(), precision)
-	// East
-	neighbors[2] = Encode(box.Lat.Mid(), box.Lon.Mid() + box.Width(), precision)
-	// SouthEast
-	neighbors[3] = Encode(box.Lat.Mid() - box.Height(), box.Lon.Mid() + box.Width(), precision)
-	// South
-	neighbors[4] = Encode(box.Lat.Mid() - box.Height(), box.Lon.Mid(), precision)
-	// SouthWest
-	neighbors[5] = Encode(box.Lat.Mid() - box.Height(), box.Lon.Mid() - box.Width(), precision)
-	// West
-	neighbors[6] = Encode(box.Lat.Mid(), box.Lon.Mid() - box.Width(), precision)
-	// NorthWest
-	neighbors[7] = Encode(box.Lat.Mid() + box.Height(), box.Lon.Mid() - box.Width(), precision)
-
-	return neighbors, nil
+	return Neighbors{
+		North: Encode(box.Lat.Mid()+box.Height(), box.Lon.Mid(), precision),
+		NorthEast: Encode(box.Lat.Mid()+box.Height(), box.Lon.Mid()+box.Width(), precision),
+		East: Encode(box.Lat.Mid(), box.Lon.Mid()+box.Width(), precision),
+		SouthEast: Encode(box.Lat.Mid()-box.Height(), box.Lon.Mid()+box.Width(), precision),
+		South: Encode(box.Lat.Mid()-box.Height(), box.Lon.Mid(), precision),
+		SouthWest: Encode(box.Lat.Mid()-box.Height(), box.Lon.Mid()-box.Width(), precision),
+		West: Encode(box.Lat.Mid(), box.Lon.Mid()-box.Width(), precision),
+		NorthWest: Encode(box.Lat.Mid()+box.Height(), box.Lon.Mid()-box.Width(), precision),
+	}, nil
 }
