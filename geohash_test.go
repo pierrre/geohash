@@ -118,8 +118,19 @@ func TestWidth(t *testing.T) {
 	}
 }
 
+func TestNeighborsInvalidCharacter(t *testing.T) {
+	_, err := Neighbors("é")
+	if err == nil {
+		t.Fatal("no error")
+	}
+}
+
 func TestNeighbors(t *testing.T) {
-	neighbors := Neighbors(testGeohash)
+	neighbors, err := Neighbors(testGeohash)
+
+	if err != nil {
+		t.Fatal("err from neighbors should not be nil")
+	}
 
 	if len(neighbors) != 8 {
 		t.Fatal("return the wrong number of neighbors")

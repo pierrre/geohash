@@ -161,10 +161,14 @@ func (r Range) Round() float64 {
 // 6  x  2
 // 5  4  3
 
-func Neighbors(gh string) []string {
+func Neighbors(gh string) ([]string, error) {
 	neighbors := make([]string, 8)
 
-	box, _ := Decode(gh)
+	box, err := Decode(gh)
+
+	if err != nil {
+		return nil, err
+	}
 	precision := len(gh)
 
 	average := func(r Range) float64 {
@@ -188,5 +192,5 @@ func Neighbors(gh string) []string {
 	// NorthWest
 	neighbors[7] = Encode(average(box.Lat) + box.Height(), average(box.Lon) - box.Width(), precision)
 
-	return neighbors
+	return neighbors, nil
 }
