@@ -171,26 +171,22 @@ func Neighbors(gh string) ([]string, error) {
 	}
 	precision := len(gh)
 
-	average := func(r Range) float64 {
-		return (r.Min + r.Max)/2
-	}
-
 	// North
-	neighbors[0] = Encode(average(box.Lat) + box.Height(), average(box.Lon), precision)
+	neighbors[0] = Encode(box.Lat.Mid() + box.Height(), box.Lon.Mid(), precision)
 	// NorthEast
-	neighbors[1] = Encode(average(box.Lat) + box.Height(), average(box.Lon) + box.Width(), precision)
+	neighbors[1] = Encode(box.Lat.Mid() + box.Height(), box.Lon.Mid() + box.Width(), precision)
 	// East
-	neighbors[2] = Encode(average(box.Lat), average(box.Lon) + box.Width(), precision)
+	neighbors[2] = Encode(box.Lat.Mid(), box.Lon.Mid() + box.Width(), precision)
 	// SouthEast
-	neighbors[3] = Encode(average(box.Lat) - box.Height(), average(box.Lon) + box.Width(), precision)
+	neighbors[3] = Encode(box.Lat.Mid() - box.Height(), box.Lon.Mid() + box.Width(), precision)
 	// South
-	neighbors[4] = Encode(average(box.Lat) - box.Height(), average(box.Lon), precision)
+	neighbors[4] = Encode(box.Lat.Mid() - box.Height(), box.Lon.Mid(), precision)
 	// SouthWest
-	neighbors[5] = Encode(average(box.Lat) - box.Height(), average(box.Lon) - box.Width(), precision)
+	neighbors[5] = Encode(box.Lat.Mid() - box.Height(), box.Lon.Mid() - box.Width(), precision)
 	// West
-	neighbors[6] = Encode(average(box.Lat), average(box.Lon) - box.Width(), precision)
+	neighbors[6] = Encode(box.Lat.Mid(), box.Lon.Mid() - box.Width(), precision)
 	// NorthWest
-	neighbors[7] = Encode(average(box.Lat) + box.Height(), average(box.Lon) - box.Width(), precision)
+	neighbors[7] = Encode(box.Lat.Mid() + box.Height(), box.Lon.Mid() - box.Width(), precision)
 
 	return neighbors, nil
 }
