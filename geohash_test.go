@@ -7,16 +7,6 @@ import (
 
 var (
 	testGeohash   = "u09tvqxnnuph"
-	testNeighbors = Neighbors{
-		North:     "u09tvqxnnupj",
-		NorthEast: "u09tvqxnnupm",
-		East:      "u09tvqxnnupk",
-		SouthEast: "u09tvqxnnup7",
-		South:     "u09tvqxnnup5",
-		SouthWest: "u09tvqxnnung",
-		West:      "u09tvqxnnunu",
-		NorthWest: "u09tvqxnnunv",
-	}
 	testPoint     = Point{Lat: 48.86, Lon: 2.35}
 	testPrecision = 12
 )
@@ -91,21 +81,79 @@ func testValueIsInsideRange(v float64, r Range) bool {
 	return v >= r.Min && v <= r.Max
 }
 
+func TestNeighbors(t *testing.T) {
+	for _, tc := range []struct {
+		gh       string
+		expected Neighbors
+	}{
+		{
+			gh: testGeohash,
+			expected: Neighbors{
+				North:     "u09tvqxnnupj",
+				NorthEast: "u09tvqxnnupm",
+				East:      "u09tvqxnnupk",
+				SouthEast: "u09tvqxnnup7",
+				South:     "u09tvqxnnup5",
+				SouthWest: "u09tvqxnnung",
+				West:      "u09tvqxnnunu",
+				NorthWest: "u09tvqxnnunv",
+			},
+		},
+		{
+			gh: Encode(0, 0, 4), // s000
+			expected: Neighbors{
+				North:     "s001",
+				NorthEast: "s003",
+				East:      "s002",
+				SouthEast: "kpbr",
+				South:     "kpbp",
+				SouthWest: "7zzz",
+				West:      "ebpb",
+				NorthWest: "ebpc",
+			},
+		},
+		/*
+			{
+				gh: Encode(0, 180, 4), // xbpb
+				expected: Neighbors{
+					North:     "xbpc",
+					NorthEast: "8001",
+					East:      "8000",
+					SouthEast: "2pbp",
+					South:     "rzzz",
+					SouthWest: "rzzx",
+					West:      "xbp8",
+					NorthWest: "xbp9",
+				},
+			},
+			{
+				gh: Encode(90, 0, 4), // upbp
+				expected: Neighbors{
+					North:     "h000",
+					NorthEast: "h002",
+					East:      "upbr",
+					SouthEast: "upbq",
+					South:     "upbn",
+					SouthWest: "gzzy",
+					West:      "gzzz",
+					NorthWest: "5bpb",
+				},
+			},
+		*/
+	} {
+		neighbors, err := GetNeighbors(tc.gh)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(neighbors, tc.expected) {
+			t.Fatalf("unexpected result for %s: got %v, want %v", tc.gh, neighbors, tc.expected)
+		}
+	}
+}
+
 func TestNeighborsInvalidCharacter(t *testing.T) {
 	_, err := GetNeighbors("é")
 	if err == nil {
 		t.Fatal("no error")
-	}
-}
-
-func TestNeighbors(t *testing.T) {
-	neighbors, err := GetNeighbors(testGeohash)
-
-	if err != nil {
-		t.Fatal("err from neighbors should not be nil")
-	}
-
-	if !reflect.DeepEqual(neighbors, testNeighbors) {
-		t.Fatal("failed to return the correct neighbors")
 	}
 }
