@@ -168,14 +168,18 @@ func GetNeighbors(gh string) (Neighbors, error) {
 	latVal := box.Lat.Val()
 	lonVal := box.Lon.Val()
 	precision := len(gh)
+	encode := func(lat, lon float64) string {
+		lat, lon = normalize(lat, lon)
+		return Encode(lat, lon, precision)
+	}
 	return Neighbors{
-		North:     Encode(latMid+latVal, lonMid, precision),
-		NorthEast: Encode(latMid+latVal, lonMid+lonVal, precision),
-		East:      Encode(latMid, lonMid+lonVal, precision),
-		SouthEast: Encode(latMid-latVal, lonMid+lonVal, precision),
-		South:     Encode(latMid-latVal, lonMid, precision),
-		SouthWest: Encode(latMid-latVal, lonMid-lonVal, precision),
-		West:      Encode(latMid, lonMid-lonVal, precision),
-		NorthWest: Encode(latMid+latVal, lonMid-lonVal, precision),
+		North:     encode(latMid+latVal, lonMid),
+		NorthEast: encode(latMid+latVal, lonMid+lonVal),
+		East:      encode(latMid, lonMid+lonVal),
+		SouthEast: encode(latMid-latVal, lonMid+lonVal),
+		South:     encode(latMid-latVal, lonMid),
+		SouthWest: encode(latMid-latVal, lonMid-lonVal),
+		West:      encode(latMid, lonMid-lonVal),
+		NorthWest: encode(latMid+latVal, lonMid-lonVal),
 	}, nil
 }

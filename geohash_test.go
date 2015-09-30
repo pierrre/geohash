@@ -112,34 +112,32 @@ func TestNeighbors(t *testing.T) {
 				NorthWest: "ebpc",
 			},
 		},
-		/*
-			{
-				gh: Encode(0, 180, 4), // xbpb
-				expected: Neighbors{
-					North:     "xbpc",
-					NorthEast: "8001",
-					East:      "8000",
-					SouthEast: "2pbp",
-					South:     "rzzz",
-					SouthWest: "rzzx",
-					West:      "xbp8",
-					NorthWest: "xbp9",
-				},
+		{
+			gh: Encode(0, 180, 4), // xbpb
+			expected: Neighbors{
+				North:     "xbpc",
+				NorthEast: "8001",
+				East:      "8000",
+				SouthEast: "2pbp",
+				South:     "rzzz",
+				SouthWest: "rzzx",
+				West:      "xbp8",
+				NorthWest: "xbp9",
 			},
-			{
-				gh: Encode(90, 0, 4), // upbp
-				expected: Neighbors{
-					North:     "h000",
-					NorthEast: "h002",
-					East:      "upbr",
-					SouthEast: "upbq",
-					South:     "upbn",
-					SouthWest: "gzzy",
-					West:      "gzzz",
-					NorthWest: "5bpb",
-				},
+		},
+		{
+			gh: Encode(90, 0, 4), // upbp
+			expected: Neighbors{
+				North:     "bpbp",
+				NorthEast: "bpbr",
+				East:      "upbr",
+				SouthEast: "upbq",
+				South:     "upbn",
+				SouthWest: "gzzy",
+				West:      "gzzz",
+				NorthWest: "zzzz",
 			},
-		*/
+		},
 	} {
 		neighbors, err := GetNeighbors(tc.gh)
 		if err != nil {
