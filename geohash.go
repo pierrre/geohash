@@ -160,20 +160,22 @@ type Neighbors struct {
 // geohash in each of the cardinal and intercardinal directions.
 func GetNeighbors(gh string) (Neighbors, error) {
 	box, err := Decode(gh)
-
 	if err != nil {
 		return Neighbors{}, err
 	}
+	latMid := box.Lat.Mid()
+	lonMid := box.Lon.Mid()
+	latVal := box.Lat.Val()
+	lonVal := box.Lon.Val()
 	precision := len(gh)
-
 	return Neighbors{
-		North:     Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid(), precision),
-		NorthEast: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid()+box.Lon.Val(), precision),
-		East:      Encode(box.Lat.Mid(), box.Lon.Mid()+box.Lon.Val(), precision),
-		SouthEast: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid()+box.Lon.Val(), precision),
-		South:     Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid(), precision),
-		SouthWest: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid()-box.Lon.Val(), precision),
-		West:      Encode(box.Lat.Mid(), box.Lon.Mid()-box.Lon.Val(), precision),
-		NorthWest: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid()-box.Lon.Val(), precision),
+		North:     Encode(latMid+latVal, lonMid, precision),
+		NorthEast: Encode(latMid+latVal, lonMid+lonVal, precision),
+		East:      Encode(latMid, lonMid+lonVal, precision),
+		SouthEast: Encode(latMid-latVal, lonMid+lonVal, precision),
+		South:     Encode(latMid-latVal, lonMid, precision),
+		SouthWest: Encode(latMid-latVal, lonMid-lonVal, precision),
+		West:      Encode(latMid, lonMid-lonVal, precision),
+		NorthWest: Encode(latMid+latVal, lonMid-lonVal, precision),
 	}, nil
 }

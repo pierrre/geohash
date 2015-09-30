@@ -95,3 +95,11 @@ func BenchmarkBroadyDecode(b *testing.B) {
 		}
 	})
 }
+
+func BenchmarkGetNeighbors(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			GetNeighbors(testGeohash)
+		}
+	})
+}
