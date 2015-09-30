@@ -8,13 +8,13 @@ import (
 var (
 	testGeohash   = "u09tvqxnnuph"
 	testNeighbors = Neighbors{
-		North: "u09tvqxnnupj",
+		North:     "u09tvqxnnupj",
 		NorthEast: "u09tvqxnnupm",
-		East: "u09tvqxnnupk",
+		East:      "u09tvqxnnupk",
 		SouthEast: "u09tvqxnnup7",
-		South: "u09tvqxnnup5",
+		South:     "u09tvqxnnup5",
 		SouthWest: "u09tvqxnnung",
-		West: "u09tvqxnnunu",
+		West:      "u09tvqxnnunu",
 		NorthWest: "u09tvqxnnunv",
 	}
 	testPoint     = Point{Lat: 48.86, Lon: 2.35}

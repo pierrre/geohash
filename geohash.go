@@ -164,13 +164,13 @@ func GetNeighbors(gh string) (Neighbors, error) {
 	precision := len(gh)
 
 	return Neighbors{
-		North: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid(), precision),
+		North:     Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid(), precision),
 		NorthEast: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid()+box.Lon.Val(), precision),
-		East: Encode(box.Lat.Mid(), box.Lon.Mid()+box.Lon.Val(), precision),
+		East:      Encode(box.Lat.Mid(), box.Lon.Mid()+box.Lon.Val(), precision),
 		SouthEast: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid()+box.Lon.Val(), precision),
-		South: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid(), precision),
+		South:     Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid(), precision),
 		SouthWest: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid()-box.Lon.Val(), precision),
-		West: Encode(box.Lat.Mid(), box.Lon.Mid()-box.Lon.Val(), precision),
+		West:      Encode(box.Lat.Mid(), box.Lon.Mid()-box.Lon.Val(), precision),
 		NorthWest: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid()-box.Lon.Val(), precision),
 	}, nil
 }
