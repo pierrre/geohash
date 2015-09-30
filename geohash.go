@@ -142,3 +142,38 @@ func (r Range) Round() float64 {
 	}
 	return roundDecimal(r.Mid(), dec)
 }
+
+// Neighbors will contain the geohashes for the neighbors of the supplied
+// geohash in each of the cardinal and intercardinal directions.
+type Neighbors struct {
+	North     string
+	NorthEast string
+	East      string
+	SouthEast string
+	South     string
+	SouthWest string
+	West      string
+	NorthWest string
+}
+
+// GetNeighbors returns a struct representing the neighbors of the supplied
+// geohash in each of the cardinal and intercardinal directions.
+func GetNeighbors(gh string) (Neighbors, error) {
+	box, err := Decode(gh)
+
+	if err != nil {
+		return Neighbors{}, err
+	}
+	precision := len(gh)
+
+	return Neighbors{
+		North:     Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid(), precision),
+		NorthEast: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid()+box.Lon.Val(), precision),
+		East:      Encode(box.Lat.Mid(), box.Lon.Mid()+box.Lon.Val(), precision),
+		SouthEast: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid()+box.Lon.Val(), precision),
+		South:     Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid(), precision),
+		SouthWest: Encode(box.Lat.Mid()-box.Lat.Val(), box.Lon.Mid()-box.Lon.Val(), precision),
+		West:      Encode(box.Lat.Mid(), box.Lon.Mid()-box.Lon.Val(), precision),
+		NorthWest: Encode(box.Lat.Mid()+box.Lat.Val(), box.Lon.Mid()-box.Lon.Val(), precision),
+	}, nil
+}

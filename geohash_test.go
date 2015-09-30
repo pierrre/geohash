@@ -1,11 +1,22 @@
 package geohash
 
 import (
+	"reflect"
 	"testing"
 )
 
 var (
 	testGeohash   = "u09tvqxnnuph"
+	testNeighbors = Neighbors{
+		North:     "u09tvqxnnupj",
+		NorthEast: "u09tvqxnnupm",
+		East:      "u09tvqxnnupk",
+		SouthEast: "u09tvqxnnup7",
+		South:     "u09tvqxnnup5",
+		SouthWest: "u09tvqxnnung",
+		West:      "u09tvqxnnunu",
+		NorthWest: "u09tvqxnnunv",
+	}
 	testPoint     = Point{Lat: 48.86, Lon: 2.35}
 	testPrecision = 12
 )
@@ -78,4 +89,23 @@ func testPointIsInsideBox(p Point, b Box) bool {
 
 func testValueIsInsideRange(v float64, r Range) bool {
 	return v >= r.Min && v <= r.Max
+}
+
+func TestNeighborsInvalidCharacter(t *testing.T) {
+	_, err := GetNeighbors("é")
+	if err == nil {
+		t.Fatal("no error")
+	}
+}
+
+func TestNeighbors(t *testing.T) {
+	neighbors, err := GetNeighbors(testGeohash)
+
+	if err != nil {
+		t.Fatal("err from neighbors should not be nil")
+	}
+
+	if !reflect.DeepEqual(neighbors, testNeighbors) {
+		t.Fatal("failed to return the correct neighbors")
+	}
 }
