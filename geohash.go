@@ -10,13 +10,25 @@ package geohash
 import (
 	"fmt"
 	"math"
-	"strings"
+)
+
+const (
+	base32 = "0123456789bcdefghjkmnpqrstuvwxyz"
 )
 
 var (
-	base32     = "0123456789bcdefghjkmnpqrstuvwxyz"
-	defaultBox = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
+	base32Lookup [1 << 8]int
+	defaultBox   = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
 )
+
+func init() {
+	for i := range base32Lookup {
+		base32Lookup[i] = -1
+	}
+	for i := 0; i < len(base32); i++ {
+		base32Lookup[base32[i]] = i
+	}
+}
 
 // EncodeAuto encodes a location to a geohash using the most suitable precision.
 func EncodeAuto(lat, lon float64) string {
@@ -67,7 +79,7 @@ func Decode(gh string) (Box, error) {
 	box := defaultBox
 	even := true
 	for i := 0; i < len(gh); i++ {
-		ci := strings.IndexByte(base32, gh[i])
+		ci := base32Lookup[gh[i]]
 		if ci == -1 {
 			return box, fmt.Errorf("geohash decode '%s': invalid character at index %d", gh, i)
 		}
