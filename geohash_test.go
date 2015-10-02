@@ -5,10 +5,13 @@ import (
 	"testing"
 )
 
-var (
+const (
 	testGeohash   = "u09tvqxnnuph"
-	testPoint     = Point{Lat: 48.86, Lon: 2.35}
 	testPrecision = 12
+)
+
+var (
+	testPoint = Point{Lat: 48.86, Lon: 2.35}
 )
 
 func TestEncodeAuto(t *testing.T) {
