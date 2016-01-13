@@ -33,7 +33,7 @@ func init() {
 // EncodeAuto encodes a location to a geohash using the most suitable precision.
 func EncodeAuto(lat, lon float64) string {
 	var gh string
-	for precision := 1; precision <= 50; precision++ {
+	for precision := 1; precision <= encodeMaxPrecision; precision++ {
 		gh = Encode(lat, lon, precision)
 		b, _ := Decode(gh)
 		p := b.Round()
@@ -44,9 +44,13 @@ func EncodeAuto(lat, lon float64) string {
 	return gh
 }
 
+const encodeMaxPrecision = 32
+
 // Encode encodes a location to a geohash.
+//
+// The maximum supported precision is 32.
 func Encode(lat, lon float64, precision int) string {
-	ghb := make([]byte, precision)
+	var buf [encodeMaxPrecision]byte
 	box := defaultBox
 	even := true
 	for i := 0; i < precision; i++ {
@@ -69,9 +73,9 @@ func Encode(lat, lon float64, precision int) string {
 			}
 			even = !even
 		}
-		ghb[i] += base32[ci]
+		buf[i] = base32[ci]
 	}
-	return string(ghb)
+	return string(buf[:precision])
 }
 
 // Decode decode a geohash to a Box.
@@ -101,11 +105,9 @@ func Decode(gh string) (Box, error) {
 	return box, nil
 }
 
-/*
-Box is a spatial data structure.
-
-It is defined by 2 ranges of latitude/longitude.
-*/
+//Box is a spatial data structure.
+//
+//It is defined by 2 ranges of latitude/longitude.
 type Box struct {
 	Lat, Lon Range
 }
@@ -142,11 +144,9 @@ func (r Range) Mid() float64 {
 	return (r.Min + r.Max) / 2
 }
 
-/*
-Round returns the rounded value between Min and Max.
-
-It uses decimal rounding.
-*/
+// Round returns the rounded value between Min and Max.
+//
+// It uses decimal rounding.
 func (r Range) Round() float64 {
 	dec := int(math.Floor(-math.Log10(r.Val())))
 	if dec < 0 {
