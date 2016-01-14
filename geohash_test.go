@@ -17,14 +17,21 @@ var (
 func TestEncodeAuto(t *testing.T) {
 	gh := EncodeAuto(testPoint.Lat, testPoint.Lon)
 	if gh != testGeohash[:7] {
-		t.Fatal("wrong geohash")
+		t.Fatalf("unexpected geohash: got %s, want %s", gh, testGeohash[:7])
 	}
 }
 
 func TestEncode(t *testing.T) {
 	gh := Encode(testPoint.Lat, testPoint.Lon, testPrecision)
 	if gh != testGeohash {
-		t.Fatal("wrong geohash")
+		t.Fatalf("unexpected geohash: got %s, want %s", gh, testGeohash)
+	}
+}
+
+func TestEncodeMaxPrecision(t *testing.T) {
+	gh := Encode(testPoint.Lat, testPoint.Lon, encodeMaxPrecision+1)
+	if len(gh) != encodeMaxPrecision {
+		t.Fatalf("unexpected geohash length: got %d, want %d", len(gh), encodeMaxPrecision)
 	}
 }
 
@@ -33,8 +40,8 @@ func TestDecode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !(testPointIsInsideBox(testPoint, box)) {
-		t.Fatal("point is outside")
+	if !testPointIsInsideBox(testPoint, box) {
+		t.Fatalf("%#v is outside of %#v", testPoint, box)
 	}
 }
 
@@ -56,8 +63,9 @@ func TestBoxCenter(t *testing.T) {
 			Max: testPoint.Lon + 1,
 		},
 	}
-	if box.Center() != testPoint {
-		t.Fatal("invalid center")
+	center := box.Center()
+	if center != testPoint {
+		t.Fatalf("unexpected center point: got %#v, want %#v", center, testPoint)
 	}
 }
 
@@ -68,10 +76,10 @@ func TestBoxRound(t *testing.T) {
 	}
 	round := box.Round()
 	if round != testPoint {
-		t.Fatal("invalid round")
+		t.Fatalf("unexpected round point: got %#v, want %#v", round, testPoint)
 	}
 	if round == box.Center() {
-		t.Fatal("round is equal to center")
+		t.Fatalf("round point %#v is equal to center point %#v", round, box.Center())
 	}
 }
 
