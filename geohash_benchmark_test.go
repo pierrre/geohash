@@ -19,13 +19,19 @@ func BenchmarkEncode(b *testing.B) {
 
 func BenchmarkDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Decode(testGeohash)
+		_, err := Decode(testGeohash)
+		if err != nil {
+			b.Fatal(err)
+		}
 	}
 }
 
 func BenchmarkNeighbors(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		GetNeighbors(testGeohash)
+		_, err := GetNeighbors(testGeohash)
+		if err != nil {
+			b.Fatal(err)
+		}
 	}
 }
 
@@ -122,6 +128,9 @@ func BenchmarkThe42CartconvertEncode(b *testing.B) {
 
 func BenchmarkThe42CartconvertDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		the42_cartconvert_geohash.GeoHashToLatLong(testGeohash, the42_cartconvert_geohash.DefaultEllipsoid)
+		_, err := the42_cartconvert_geohash.GeoHashToLatLong(testGeohash, the42_cartconvert_geohash.DefaultEllipsoid)
+		if err != nil {
+			b.Fatal(err)
+		}
 	}
 }
