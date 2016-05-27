@@ -99,10 +99,7 @@ func processStdin() error {
 		}
 		fmt.Print(result)
 	}
-	if err := scanner.Err(); err != nil {
-		return err
-	}
-	return nil
+	return scanner.Err()
 }
 
 func processValue(v string) (string, error) {
