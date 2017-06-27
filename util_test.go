@@ -71,7 +71,7 @@ func TestNormalize(t *testing.T) {
 	}
 }
 
-func TestCenterMod(t *testing.T) {
+func TestCenter360(t *testing.T) {
 	for _, tc := range []struct {
 		value    float64
 		expected float64
@@ -84,7 +84,7 @@ func TestCenterMod(t *testing.T) {
 		{-180, 180},
 		{-45, -45},
 	} {
-		if result := centerMod(tc.value, 360); result != tc.expected {
+		if result := center360(tc.value); result != tc.expected {
 			t.Fatalf("unexpected result for %f: got %f, want %f", tc.value, result, tc.expected)
 		}
 	}

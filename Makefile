@@ -16,10 +16,10 @@ test:
 	go tool cover -html=build/coverage.txt -o=build/coverage.html
 
 lint:
-	go get -v github.com/alecthomas/gometalinter
-	gometalinter --install
-	gometalinter -E gofmt -D gotype -D vetshadow -D dupl -D goconst -D interfacer -D gas\
-	 --tests --deadline=10m --concurrency=2 --enable-gc ./...
+	go get -v -u github.com/alecthomas/gometalinter
+	gometalinter --install --update --no-vendored-linters
+	GOGC=800 gometalinter --enable-all -D dupl -D lll -D gas -D goconst -D gotype -D interfacer -D misspell -D safesql -D test -D testify -D vetshadow\
+	 --tests --deadline=10m --concurrency=4 --enable-gc ./...
 
 clean:
 	rm -rf build

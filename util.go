@@ -18,7 +18,7 @@ func roundDecimal(val float64, dec int) float64 {
 
 func normalize(lat, lon float64) (float64, float64) {
 	if lat > 90 || lat < -90 {
-		lat = centerMod(lat, 360)
+		lat = center360(lat)
 		invertLon := true
 		if lat < -90 {
 			lat = -180 - lat
@@ -36,18 +36,18 @@ func normalize(lat, lon float64) (float64, float64) {
 		}
 	}
 	if lon > 180 || lon <= -180 {
-		lon = centerMod(lon, 360)
+		lon = center360(lon)
 	}
 	return lat, lon
 }
 
-func centerMod(x, y float64) float64 {
-	r := math.Mod(x, y)
-	if r <= 0 {
-		r += y
+func center360(v float64) float64 {
+	v = math.Mod(v, 360)
+	if v <= 0 {
+		v += 360
 	}
-	if r > y/2 {
-		r -= y
+	if v > 180 {
+		v -= 360
 	}
-	return r
+	return v
 }
