@@ -1,8 +1,9 @@
 package geohash
 
 import (
-	"reflect"
 	"testing"
+
+	"github.com/pierrre/compare"
 )
 
 const (
@@ -154,8 +155,9 @@ func TestNeighbors(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !reflect.DeepEqual(neighbors, tc.expected) {
-			t.Fatalf("unexpected result for %s: got %v, want %v", tc.gh, neighbors, tc.expected)
+		diff := compare.Compare(neighbors, tc.expected)
+		if len(diff) != 0 {
+			t.Fatalf("unexpected result for %s:\ngot: %#v\nwant: %#v\ndiff:\n%+v", tc.gh, neighbors, tc.expected, diff)
 		}
 	}
 }
