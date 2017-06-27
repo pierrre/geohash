@@ -1,5 +1,3 @@
-all: build test lint
-
 build: build-cmd
 
 build-cmd:
