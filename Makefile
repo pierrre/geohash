@@ -1,6 +1,6 @@
-build: build-cmd
+build: build/geohash
 
-build-cmd:
+build/geohash:
 	go build -v -i -o build/geohash ./cmd/geohash
 
 test:
@@ -15,4 +15,4 @@ lint:
 clean:
 	rm -rf build
 
-.PHONY: build build-cmd test lint clean
+.PHONY: build test lint clean
