@@ -5,7 +5,7 @@ import (
 
 	codefor_geohash "github.com/Codefor/geohash"
 	tomi_hiltunen_geohash "github.com/TomiHiltunen/geohash-golang"
-	broady_geohash "github.com/broady/gogeohash" // nolint: misspell
+	broady_geohash "github.com/broady/gogeohash" //nolint: misspell
 	fanixk_geohash "github.com/fanixk/geohash"
 	mmcloughlin_geohash "github.com/mmcloughlin/geohash"
 	the42_cartconvert_geohash "github.com/the42/cartconvert/cartconvert"
@@ -67,13 +67,13 @@ func BenchmarkTomiHiltunenNeighbors(b *testing.B) {
 
 func BenchmarkBroadyEncode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		broady_geohash.Encode(testPoint.Lat, testPoint.Lon) // nolint: misspell
+		broady_geohash.Encode(testPoint.Lat, testPoint.Lon) //nolint: misspell
 	}
 }
 
 func BenchmarkBroadyDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		broady_geohash.Decode(testGeohash) // nolint: misspell
+		broady_geohash.Decode(testGeohash) //nolint: misspell
 	}
 }
 

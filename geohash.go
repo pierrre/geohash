@@ -108,9 +108,9 @@ func Decode(gh string) (Box, error) {
 	return box, nil
 }
 
-//Box is a spatial data structure.
+// Box is a spatial data structure.
 //
-//It is defined by 2 ranges of latitude/longitude.
+// It is defined by 2 ranges of latitude/longitude.
 type Box struct {
 	Lat, Lon Range
 }

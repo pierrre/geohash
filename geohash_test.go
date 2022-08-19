@@ -11,9 +11,7 @@ const (
 	testPrecision = 12
 )
 
-var (
-	testPoint = Point{Lat: 48.86, Lon: 2.35}
-)
+var testPoint = Point{Lat: 48.86, Lon: 2.35}
 
 func TestEncodeAuto(t *testing.T) {
 	gh := EncodeAuto(testPoint.Lat, testPoint.Lon)

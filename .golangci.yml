@@ -1,28 +1,143 @@
 run:
-  deadline: "10m"
+  timeout: "10m"
+output:
+  uniq-by-line: false
+  sort-results: true
 linters:
   disable-all: true
   enable:
+    - "asciicheck"
+    - "bidichk"
     - "bodyclose"
-    - "deadcode"
+    - "containedctx"
+    - "contextcheck"
+    # - "cyclop" # Redundant with gocyclo.
+    # - "deadcode" # Replaced by unused.
+    # - "decorder" # Maybe overkill.
+    - "depguard"
+    - "dogsled"
+    - "dupl"
+    - "durationcheck"
     - "errcheck"
+    - "errchkjson"
+    - "errname"
+    - "errorlint"
+    - "execinquery"
+    - "exhaustive"
+    # - "exhaustivestruct " # Replaced by exhaustruct.
+    # - "exhaustruct" # Too many false positive, and not always relevant.
+    - "exportloopref"
+    - "forbidigo"
+    - "forcetypeassert"
+    # - "funlen" # It causes issues in table driven tests, and cyclomatic complexity is more relevant.
+    # - "gci" # Redundant with goimports and grouper.
+    # - "gochecknoglobals" # It's OK.
+    # - "gochecknoinits" # It's OK.
+    # - "gocognit" # Redundant with gocyclo.
+    # - "goconst" # Too many false positive.
+    # - "gocritic" # Must be disabled for Go 1.18.
     - "gocyclo"
+    - "godot"
+    # - "godox" # Should not be reported as error.
+    # - "goerr113" # Not useful.
     - "gofmt"
+    - "gofumpt"
+    # - "goheader" # Not useful.
     - "goimports"
-    - "golint"
+    # - "golint" # Replaced by revive.
+    # - "gomnd" # Too many false positive.
+    # - "gomoddirectives" # Not useful.
+    # - "gomodguard" # Redundant with depguard.
+    - "goprintffuncname"
+    - "gosec"
+    - "gosimple"
     - "govet"
+    - "grouper"
+    # - "ifshort" # Deprecated.
+    - "importas"
     - "ineffassign"
-    - "megacheck"
+    # - "interfacer" # Archived.
+    # - "ireturn" # Too many false positive.
+    # - "lll" # We don't use punch cards anymore.
+    # - "maintidx" # Redundant with gocyclo.
+    - "makezero"
+    # - "maligned" # Replaced by govet 'fieldalignment'.
     - "misspell"
     - "nakedret"
-    - "structcheck"
+    - "nestif"
+    - "nilerr"
+    - "nilnil"
+    # - "nlreturn" # Is that a good practice ?
+    - "noctx"
+    - "nolintlint"
+    # - "nonamedreturns" # Named returns are OK.
+    - "nosprintfhostport"
+    # - "paralleltest" # Not useful.
+    - "prealloc"
+    - "predeclared"
+    # - "promlinter" # Not useful.
+    - "revive"
+    - "rowserrcheck"
+    # - "scopelint" # Replaced by exportloopref.
+    - "sqlclosecheck"
+    - "staticcheck"
+    #- "structcheck" # Replaced by unused.
+    - "stylecheck"
+    #- "tagliatelle" # Not useful.
+    - "tenv"
+    # - "testpackage" # Not useful.
+    - "thelper"
+    # - "tparallel" # Not useful.
+    - "typecheck"
     - "unconvert"
     - "unparam"
-    - "varcheck"
+    - "unused"
+    - "usestdlibvars"
+    # - "varcheck" # Replaced by unused.
+    # - "varnamelen" # Maybe overkill.
+    - "wastedassign"
+    # - "whitespace" # Not useful.
+    - "wrapcheck"
+    # - "wsl" # Not useful.
 linters-settings:
+  depguard:
+    list-type: blacklist
+    include-go-root: true
+    packages-with-error-message:
+      - reflect: "shouldn't be used by most application"
+      - unsafe: "it's not safe"
+  gocritic:
+    enabled-tags:
+      - experimental
+      - diagnostic
+      - opinionated
+      - performance
+      - style
   gocyclo:
     min-complexity: 10
+  gofumpt:
+    extra-rules: true
+  gosimple:
+    checks: [ "all" ]
+  govet:
+    enable-all: true
+    disable:
+      - fieldalignment # Too many false positive.
+  grouper:
+    import-require-single-import: true
+    import-require-grouping: true
+  nolintlint:
+    allow-unused: false
+    allow-no-explanation:
+      - errcheck
+      - misspell
+    require-explanation: true
+    require-specific: true
+  staticcheck:
+    checks: [ "all" ]
+  stylecheck:
+    checks: [ "all" ]
 issues:
   exclude-use-default: false
-  max-per-linter: 0
+  max-issues-per-linter: 0
   max-same-issues: 0

@@ -1,34 +1,40 @@
 /*
 Geohash command-line.
 
-Usage
+# Usage
 
 Encode lat/lon to geohash:
+
 	geohash 48.86,2.35
 
 	u09tvqx
 
 Decode geohash to lat/lon:
+
 	geohash u09tvqx
 
 	48.86,2.35
 
 Custom precision:
+
 	geohash -precision=12 48.86,2.35
 
 	u09tvqxnnuph
 
 Don't round:
+
 	geohash -round=false u09tvqx
 
 	48.85963439941406,2.3503875732421875
 
 Multiple arguments:
+
 	geohash 35.691015,139.766014 u09tvqx
 
 	xn77h3qe0pmt 48.86,2.35
 
 Stdin:
+
 	echo "u09tvqx" | geohash
 
 	48.86,2.35
@@ -71,15 +77,16 @@ func processSwitch() error {
 }
 
 func processArgs() error {
-	var results []string
-	for _, arg := range flag.Args() {
+	args := flag.Args()
+	results := make([]string, 0, len(args))
+	for _, arg := range args {
 		result, err := processValue(arg)
 		if err != nil {
 			return err
 		}
 		results = append(results, result)
 	}
-	fmt.Println(strings.Join(results, " "))
+	fmt.Fprintln(os.Stdout, strings.Join(results, " "))
 	return nil
 }
 
@@ -95,11 +102,15 @@ func processStdin() error {
 		if first {
 			first = false
 		} else {
-			fmt.Print(" ")
+			fmt.Fprint(os.Stdout, " ")
 		}
-		fmt.Print(result)
+		fmt.Fprint(os.Stdout, result)
 	}
-	return scanner.Err()
+	err := scanner.Err()
+	if err != nil {
+		return fmt.Errorf("scanner: %w", err)
+	}
+	return nil
 }
 
 func processValue(v string) (string, error) {
@@ -117,12 +128,12 @@ func processLatLon(latLon string) (string, error) {
 
 	lat, err := strconv.ParseFloat(latLonSplit[0], 64)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("latitude: %w", err)
 	}
 
 	lon, err := strconv.ParseFloat(latLonSplit[1], 64)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("longitude: %w", err)
 	}
 
 	var gh string
@@ -137,7 +148,7 @@ func processLatLon(latLon string) (string, error) {
 func processGeohash(arg string) (string, error) {
 	box, err := geohash.Decode(arg)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("geohash: %w", err)
 	}
 
 	var p geohash.Point

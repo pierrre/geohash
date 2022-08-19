@@ -17,6 +17,7 @@ func roundDecimal(val float64, dec int) float64 {
 }
 
 func normalize(lat, lon float64) (float64, float64) {
+	//nolint:nestif // Yes it's complex.
 	if lat > 90 || lat < -90 {
 		lat = center360(lat)
 		invertLon := true
