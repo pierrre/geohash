@@ -144,7 +144,7 @@ ci:
 CI_APT_PACKAGES:=pcregrep
 .PHONY: ci-apt
 ci-apt:
-	sudo apt-get update
-	sudo apt-get install $(CI_APT_PACKAGES)
+	sudo apt update
+	sudo apt install $(CI_APT_PACKAGES)
 
 endif # CI end
