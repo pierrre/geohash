@@ -56,9 +56,11 @@ linters:
     # - "ifshort" # Deprecated.
     - "importas"
     - "ineffassign"
+    - "interfacebloat"
     # - "interfacer" # Archived.
     # - "ireturn" # Too many false positive.
     # - "lll" # We don't use punch cards anymore.
+    # - "logrlint" # Not used.
     # - "maintidx" # Redundant with gocyclo.
     - "makezero"
     # - "maligned" # Replaced by govet 'fieldalignment'.
@@ -71,11 +73,13 @@ linters:
     - "noctx"
     - "nolintlint"
     # - "nonamedreturns" # Named returns are OK.
+    # - "nosnakecase" # Deprecated.
     - "nosprintfhostport"
     # - "paralleltest" # Not useful.
     - "prealloc"
     - "predeclared"
     # - "promlinter" # Not useful.
+    - "reassign"
     - "revive"
     - "rowserrcheck"
     # - "scopelint" # Replaced by exportloopref.
