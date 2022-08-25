@@ -35,7 +35,7 @@ linters:
     # - "gochecknoinits" # It's OK.
     # - "gocognit" # Redundant with gocyclo.
     # - "goconst" # Too many false positive.
-    # - "gocritic" # Must be disabled for Go 1.18.
+    - "gocritic"
     - "gocyclo"
     - "godot"
     # - "godox" # Should not be reported as error.
@@ -105,18 +105,21 @@ linters:
     # - "wsl" # Not useful.
 linters-settings:
   depguard:
-    list-type: blacklist
+    list-type: "blacklist"
     include-go-root: true
     packages-with-error-message:
       - reflect: "shouldn't be used by most application"
       - unsafe: "it's not safe"
   gocritic:
     enabled-tags:
-      - experimental
-      - diagnostic
-      - opinionated
-      - performance
-      - style
+      - "experimental"
+      - "diagnostic"
+      - "opinionated"
+      - "performance"
+      - "style"
+    disabled-checks:
+      - "externalErrorReassign" # https://github.com/golangci/golangci-lint/issues/3136
+      - "whyNoLint" # We already have the nolintlint linter.
   gocyclo:
     min-complexity: 10
   gofumpt:
@@ -126,15 +129,15 @@ linters-settings:
   govet:
     enable-all: true
     disable:
-      - fieldalignment # Too many false positive.
+      - "fieldalignment" # Too many false positive.
   grouper:
     import-require-single-import: true
     import-require-grouping: true
   nolintlint:
     allow-unused: false
     allow-no-explanation:
-      - errcheck
-      - misspell
+      - "errcheck"
+      - "misspell"
     require-explanation: true
     require-specific: true
   staticcheck:
