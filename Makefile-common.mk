@@ -37,7 +37,18 @@ lint:
 	$(MAKE) golangci-lint
 	$(MAKE) lint-rules
 
-GOLANGCI_LINT_VERSION=v1.49.0
+# version:
+# - tag: vX.Y.Z
+# - branch: master
+# - latest
+GOLANGCI_LINT_VERSION?=v1.49.0
+# Installation type:
+# - binary
+# - source
+GOLANGCI_LINT_TYPE?=binary
+
+ifeq ($(GOLANGCI_LINT_TYPE),binary)
+
 GOLANGCI_LINT_DIR=$(shell go env GOPATH)/pkg/golangci-lint/$(GOLANGCI_LINT_VERSION)
 GOLANGCI_LINT_BIN=$(GOLANGCI_LINT_DIR)/golangci-lint
 
@@ -46,6 +57,14 @@ $(GOLANGCI_LINT_BIN):
 
 .PHONY: install-golangci-lint
 install-golangci-lint: $(GOLANGCI_LINT_BIN)
+
+else ifeq ($(GOLANGCI_LINT_TYPE),source)
+
+GOLANGCI_LINT_BIN=go run -v github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
+
+install-golangci-lint:
+
+endif
 
 GOLANGCI_LINT_RUN=$(GOLANGCI_LINT_BIN) -v run
 .PHONY: golangci-lint
