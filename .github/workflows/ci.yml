@@ -4,14 +4,15 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
         with:
           go-version: '1.19.2'
+          cache: true
       - name: "Run CI"
         run: make --warn-undefined-variables --no-print-directory ci
       - name: "Upload coverage"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: coverage
           path: coverage.*
