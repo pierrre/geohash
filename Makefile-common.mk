@@ -94,6 +94,7 @@ lint-rules: ensure-command-pcregrep
 	[ -e README.md ]
 	[ -e .github/workflows/ci.yml ]
 	[ -e go.mod ]
+	[ -e go.sum ]
 	[ -e .golangci.yml ]
 	[ -e Makefile ]
 	[ -e Makefile-common.mk ]
