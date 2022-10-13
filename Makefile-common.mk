@@ -87,7 +87,7 @@ ensure-command-pcregrep:
 .PHONY: lint-rules
 lint-rules: ensure-command-pcregrep
 	# Disallowed files.
-	find . -name ".DS_Store" | xargs -I {} sh -c 'echo {} && false'
+	! find . -name ".DS_Store" | pcregrep "."q
 
 	# Mandatory files.
 	[ -e .gitignore ]
