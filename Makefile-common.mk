@@ -145,6 +145,10 @@ CI_LOG_GROUP_END=@echo "::endgroup::"
 
 .PHONY: ci
 ci:
+	$(call CI_LOG_GROUP_START,env)
+	$(MAKE) ci-env
+	$(call CI_LOG_GROUP_END)
+
 	$(call CI_LOG_GROUP_START,apt)
 	$(MAKE) ci-apt
 	$(call CI_LOG_GROUP_END)
@@ -160,6 +164,10 @@ ci:
 	$(call CI_LOG_GROUP_START,lint)
 	$(MAKE) lint
 	$(call CI_LOG_GROUP_END)
+
+.PHONY: ci-env
+ci-env:
+	env
 
 CI_APT_PACKAGES:=pcregrep
 .PHONY: ci-apt
