@@ -9,5 +9,5 @@ require (
 	github.com/fanixk/geohash v0.0.0-20150324002647-c1f9b5fa157a
 	github.com/mmcloughlin/geohash v0.10.0
 	github.com/pierrre/compare v1.1.0
-	github.com/the42/cartconvert v0.0.0-20131203171324-aae784c392b8
+	github.com/the42/cartconvert v1.0.0
 )
