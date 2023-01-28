@@ -13,6 +13,8 @@ VERSION?=$(shell (git describe --tags --exact-match 2> /dev/null || git rev-pars
 version:
 	@echo $(VERSION)
 
+GO_MODULE=$(shell go list -m)
+
 GO_BUILD_DIR=build
 .PHONY: build
 build:
@@ -140,11 +142,15 @@ clean:
 
 ifeq ($(CI),true)
 
+GITHUB_REF?=$(error missing GITHUB_REF)
+GITHUB_BRANCH=$(shell echo $(GITHUB_REF) | grep -Po "^refs\/heads/\K.+")
+GITHUB_TAG=$(shell echo $(GITHUB_REF) | grep -Po "^refs\/tags/\K.+")
+
 CI_LOG_GROUP_START=@echo "::group::$(1)"
 CI_LOG_GROUP_END=@echo "::endgroup::"
 
 .PHONY: ci
-ci:
+ci::
 	$(call CI_LOG_GROUP_START,env)
 	$(MAKE) ci-env
 	$(call CI_LOG_GROUP_END)
@@ -174,5 +180,17 @@ CI_APT_PACKAGES:=pcregrep
 ci-apt:
 	sudo apt update
 	sudo apt install $(CI_APT_PACKAGES)
+
+ifneq ($(GITHUB_TAG),)
+ci::
+	$(call CI_LOG_GROUP_START,tag)
+	$(MAKE) ci-tag
+	$(call CI_LOG_GROUP_END)
+
+GO_PROXY_MODULE_TAG_INFO_URL=https://proxy.golang.org/$(GO_MODULE)/@v/$(GITHUB_TAG).info
+.PHONY: ci-tag
+ci-tag:
+	curl -vL --fail-with-body $(GO_PROXY_MODULE_TAG_INFO_URL)
+endif
 
 endif # CI end
