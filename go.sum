@@ -8,7 +8,7 @@ github.com/fanixk/geohash v0.0.0-20150324002647-c1f9b5fa157a h1:Fyfh/dsHFrC6nkX7
 github.com/fanixk/geohash v0.0.0-20150324002647-c1f9b5fa157a/go.mod h1:UgNw+PTmmGN8rV7RvjvnBMsoTU8ZXXnaT3hYsDTBlgQ=
 github.com/mmcloughlin/geohash v0.10.0 h1:9w1HchfDfdeLc+jFEf/04D27KP7E2QmpDu52wPbJWRE=
 github.com/mmcloughlin/geohash v0.10.0/go.mod h1:oNZxQo5yWJh0eMQEP/8hwQuVx9Z9tjwFUqcTB1SmG0c=
-github.com/pierrre/compare v1.1.0 h1:57z388tk9GXcyLnLXh1pMRdCQrfUH056x9dyNCCZZtg=
-github.com/pierrre/compare v1.1.0/go.mod h1:M3rK2sFL0CVhG43y3CWCmHBvBzhQ+vLGCKGuioJnokc=
+github.com/pierrre/compare v1.1.1 h1:MNGVUesTj2xIPD3QChoFd4GBYV76dMRLsCVDCiCR+Os=
+github.com/pierrre/compare v1.1.1/go.mod h1:M3rK2sFL0CVhG43y3CWCmHBvBzhQ+vLGCKGuioJnokc=
 github.com/the42/cartconvert v1.0.0 h1:g8kt6ic2GEhdcZ61ZP9GsWwhosVo5nCnH1n2/oAQXUU=
 github.com/the42/cartconvert v1.0.0/go.mod h1:fWO/msnJVhHqN1yX6OBoxSyfj7TEj1hHiL8bJSQsK30=
