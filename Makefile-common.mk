@@ -94,6 +94,7 @@ lint-rules: ensure-command-pcregrep
 	# Mandatory files.
 	[ -e .gitignore ]
 	[ -e README.md ]
+	[ -e CODEOWNERS ]
 	[ -e .github/workflows/ci.yml ]
 	[ -e go.mod ]
 	[ -e go.sum ]
