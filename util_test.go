@@ -2,6 +2,8 @@ package geohash
 
 import (
 	"testing"
+
+	"github.com/pierrre/assert"
 )
 
 func TestRound(t *testing.T) {
@@ -19,9 +21,8 @@ func TestRound(t *testing.T) {
 		{1.5, 2},
 		{1.7, 2},
 	} {
-		if result := round(tc.value); result != tc.expected {
-			t.Fatalf("round %f, got %f instead of %f", tc.value, result, tc.expected)
-		}
+		result := round(tc.value)
+		assert.Equal(t, result, tc.expected)
 	}
 }
 
@@ -39,9 +40,8 @@ func TestRoundDecimal(t *testing.T) {
 		{5, 12.34568},
 		{6, 12.345678},
 	} {
-		if result := roundDecimal(value, tc.dec); result != tc.expected {
-			t.Fatalf("round %f with %d decimal, got %f instead of %f", value, tc.dec, result, tc.expected)
-		}
+		result := roundDecimal(value, tc.dec)
+		assert.Equal(t, result, tc.expected)
 	}
 }
 
@@ -65,9 +65,9 @@ func TestNormalize(t *testing.T) {
 		{0, -181, 0, 179},
 		{270, 1, -90, 1},
 	} {
-		if resultLat, resultLon := normalize(tc.lat, tc.lon); resultLat != tc.expectedLat || resultLon != tc.expectedLon {
-			t.Fatalf("unexpected result for %f,%f: got %f,%f, want %f,%f", tc.lat, tc.lon, resultLat, resultLon, tc.expectedLat, tc.expectedLon)
-		}
+		resultLat, resultLon := normalize(tc.lat, tc.lon)
+		assert.Equal(t, resultLat, tc.expectedLat)
+		assert.Equal(t, resultLon, tc.expectedLon)
 	}
 }
 
@@ -84,8 +84,7 @@ func TestCenter360(t *testing.T) {
 		{-180, 180},
 		{-45, -45},
 	} {
-		if result := center360(tc.value); result != tc.expected {
-			t.Fatalf("unexpected result for %f: got %f, want %f", tc.value, result, tc.expected)
-		}
+		result := center360(tc.value)
+		assert.Equal(t, result, tc.expected)
 	}
 }

@@ -8,6 +8,7 @@ import (
 	broadygeohash "github.com/broady/gogeohash" //nolint:misspell
 	fanixk_geohash "github.com/fanixk/geohash"
 	mmcloughlin_geohash "github.com/mmcloughlin/geohash"
+	"github.com/pierrre/assert"
 	the42_cartconvert_geohash "github.com/the42/cartconvert/cartconvert"
 )
 
@@ -21,7 +22,7 @@ func BenchmarkDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_, err := Decode(testGeohash)
 		if err != nil {
-			b.Fatal(err)
+			assert.NoError(b, err)
 		}
 	}
 }
@@ -30,7 +31,7 @@ func BenchmarkNeighbors(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_, err := GetNeighbors(testGeohash)
 		if err != nil {
-			b.Fatal(err)
+			assert.NoError(b, err)
 		}
 	}
 }
@@ -130,7 +131,7 @@ func BenchmarkThe42CartconvertDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_, err := the42_cartconvert_geohash.GeoHashToLatLong(testGeohash, the42_cartconvert_geohash.DefaultEllipsoid)
 		if err != nil {
-			b.Fatal(err)
+			assert.NoError(b, err)
 		}
 	}
 }

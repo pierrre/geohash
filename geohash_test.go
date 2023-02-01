@@ -3,8 +3,17 @@ package geohash
 import (
 	"testing"
 
-	"github.com/pierrre/compare"
+	"github.com/pierrre/assert"
+	"github.com/pierrre/assert/ext/davecghspew"
+	"github.com/pierrre/assert/ext/pierrrecompare"
+	"github.com/pierrre/assert/ext/pierrreerrors"
 )
+
+func init() {
+	pierrrecompare.Configure()
+	davecghspew.ConfigureDefault()
+	pierrreerrors.Configure()
+}
 
 const (
 	testGeohash   = "u09tvqxnnuph"
@@ -15,40 +24,28 @@ var testPoint = Point{Lat: 48.86, Lon: 2.35}
 
 func TestEncodeAuto(t *testing.T) {
 	gh := EncodeAuto(testPoint.Lat, testPoint.Lon)
-	if gh != testGeohash[:7] {
-		t.Fatalf("unexpected geohash: got %s, want %s", gh, testGeohash[:7])
-	}
+	assert.Equal(t, gh, testGeohash[:7])
 }
 
 func TestEncode(t *testing.T) {
 	gh := Encode(testPoint.Lat, testPoint.Lon, testPrecision)
-	if gh != testGeohash {
-		t.Fatalf("unexpected geohash: got %s, want %s", gh, testGeohash)
-	}
+	assert.Equal(t, gh, testGeohash)
 }
 
 func TestEncodeMaxPrecision(t *testing.T) {
 	gh := Encode(testPoint.Lat, testPoint.Lon, encodeMaxPrecision+1)
-	if len(gh) != encodeMaxPrecision {
-		t.Fatalf("unexpected geohash length: got %d, want %d", len(gh), encodeMaxPrecision)
-	}
+	assert.StringLen(t, gh, encodeMaxPrecision)
 }
 
 func TestDecode(t *testing.T) {
 	box, err := Decode(testGeohash)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !testPointIsInsideBox(testPoint, box) {
-		t.Fatalf("%#v is outside of %#v", testPoint, box)
-	}
+	assert.NoError(t, err)
+	assert.True(t, testPointIsInsideBox(testPoint, box))
 }
 
 func TestDecodeInvalidCharacter(t *testing.T) {
 	_, err := Decode("é")
-	if err == nil {
-		t.Fatal("no error")
-	}
+	assert.Error(t, err)
 }
 
 func TestBoxCenter(t *testing.T) {
@@ -63,23 +60,15 @@ func TestBoxCenter(t *testing.T) {
 		},
 	}
 	center := box.Center()
-	if center != testPoint {
-		t.Fatalf("unexpected center point: got %#v, want %#v", center, testPoint)
-	}
+	assert.Equal(t, center, testPoint)
 }
 
 func TestBoxRound(t *testing.T) {
 	box, err := Decode(testGeohash)
-	if err != nil {
-		t.Fatal(err)
-	}
+	assert.NoError(t, err)
 	round := box.Round()
-	if round != testPoint {
-		t.Fatalf("unexpected round point: got %#v, want %#v", round, testPoint)
-	}
-	if round == box.Center() {
-		t.Fatalf("round point %#v is equal to center point %#v", round, box.Center())
-	}
+	assert.Equal(t, round, testPoint)
+	assert.NotEqual(t, round, box.Center())
 }
 
 func testPointIsInsideBox(p Point, b Box) bool {
@@ -149,20 +138,15 @@ func TestNeighbors(t *testing.T) {
 			},
 		},
 	} {
-		neighbors, err := GetNeighbors(tc.gh)
-		if err != nil {
-			t.Fatal(err)
-		}
-		diff := compare.Compare(neighbors, tc.expected)
-		if len(diff) != 0 {
-			t.Fatalf("unexpected result for %s:\ngot: %#v\nwant: %#v\ndiff:\n%+v", tc.gh, neighbors, tc.expected, diff)
-		}
+		t.Run(tc.gh, func(t *testing.T) {
+			neighbors, err := GetNeighbors(tc.gh)
+			assert.NoError(t, err)
+			assert.Equal(t, neighbors, tc.expected)
+		})
 	}
 }
 
 func TestNeighborsInvalidCharacter(t *testing.T) {
 	_, err := GetNeighbors("é")
-	if err == nil {
-		t.Fatal("no error")
-	}
+	assert.Error(t, err)
 }
