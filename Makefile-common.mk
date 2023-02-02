@@ -43,7 +43,7 @@ lint:
 # - tag: vX.Y.Z
 # - branch: master
 # - latest
-GOLANGCI_LINT_VERSION?=v1.50.1
+GOLANGCI_LINT_VERSION?=v1.51.0
 # Installation type:
 # - binary
 # - source
@@ -119,8 +119,8 @@ lint-rules: ensure-command-pcregrep
 	# Don't declare a var block inside a function.
 	! pcregrep -rn --include=".+\.go$$" "^\t+var \($$" .
 
-	# Use Go 1.19 in go.mod.
-	! pcregrep -n "^go " go.mod | pcregrep -v "go 1.19$$"
+	# Use Go 1.20 in go.mod.
+	! pcregrep -n "^go " go.mod | pcregrep -v "go 1.20$$"
 
 .PHONY: mod-update
 mod-update:
