@@ -6,6 +6,7 @@ output:
 linters:
   disable-all: true
   enable:
+    - "asasalint"
     - "asciicheck"
     - "bidichk"
     - "bodyclose"
@@ -32,6 +33,7 @@ linters:
     - "forcetypeassert"
     # - "funlen" # It causes issues in table driven tests, and cyclomatic complexity is more relevant.
     # - "gci" # Redundant with goimports and grouper.
+    # - "ginkgolinter" # Not used.
     # - "gochecknoglobals" # It's OK.
     # - "gochecknoinits" # It's OK.
     # - "gocognit" # Redundant with gocyclo.
@@ -61,7 +63,7 @@ linters:
     # - "interfacer" # Archived.
     # - "ireturn" # Too many false positive.
     # - "lll" # We don't use punch cards anymore.
-    # - "logrlint" # Not used.
+    - "loggercheck"
     # - "maintidx" # Redundant with gocyclo.
     - "makezero"
     # - "maligned" # Replaced by govet 'fieldalignment'.
@@ -79,7 +81,7 @@ linters:
     # - "paralleltest" # Not useful.
     - "prealloc"
     - "predeclared"
-    # - "promlinter" # Not useful.
+    - "promlinter"
     - "reassign"
     - "revive"
     - "rowserrcheck"
