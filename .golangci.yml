@@ -141,6 +141,10 @@ linters-settings:
       - "misspell"
     require-explanation: true
     require-specific: true
+  revive:
+    rules:
+      - name: "unused-parameter" # It's OK.
+        disabled: true
   staticcheck:
     checks: [ "all" ]
   stylecheck:
