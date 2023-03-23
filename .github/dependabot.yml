@@ -6,5 +6,9 @@ updates:
       interval: "daily"
       time: "08:00"
       timezone: "Europe/Paris"
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+      - dependency-type: "all"
     reviewers:
       - "pierrre"
