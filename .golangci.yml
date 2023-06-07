@@ -54,6 +54,7 @@ linters:
     - "goprintffuncname"
     - "gosec"
     - "gosimple"
+    # - "gosmopolitan" # Not useful.
     - "govet"
     - "grouper"
     # - "ifshort" # Deprecated.
@@ -67,6 +68,7 @@ linters:
     # - "maintidx" # Redundant with gocyclo.
     - "makezero"
     # - "maligned" # Replaced by govet 'fieldalignment'.
+    - "mirror"
     - "misspell"
     - "nakedret"
     - "nestif"
@@ -90,6 +92,7 @@ linters:
     - "staticcheck"
     #- "structcheck" # Replaced by unused.
     - "stylecheck"
+    # - "tagalign" # Not useful.
     #- "tagliatelle" # Not useful.
     - "tenv"
     - "testableexamples"
@@ -107,12 +110,17 @@ linters:
     # - "whitespace" # Not useful.
     - "wrapcheck"
     # - "wsl" # Not useful.
+    # - "zerologlint" # Not useful.
 linters-settings:
   depguard:
-    list-type: "blacklist"
-    include-go-root: true
-    packages-with-error-message:
-      - unsafe: "it's not safe"
+    rules:
+      main:
+        files:
+          - "$all"
+        deny:
+          - pkg: "unsafe"
+            desc: "it's not safe"
+
   gocritic:
     enabled-tags:
       - "experimental"
