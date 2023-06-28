@@ -16,8 +16,8 @@ github.com/pierrre/compare v1.1.3 h1:9dGVdOvvyCf7ixBLn+ppt0cubt6wiM0238m6jX7CV8c
 github.com/pierrre/compare v1.1.3/go.mod h1:ggOLJkLr6kRdZHxz1x+CIAjOySDFBhC32pPXSyNqEsI=
 github.com/pierrre/errors v0.3.9 h1:bNzl4b88zRfrm6fLC/PdkwZc7DOuIhTVowgosgGElyg=
 github.com/pierrre/errors v0.3.9/go.mod h1:PY3BcbG0qh09kz8XBcYl9Fv5Kyd580ARb/8Qd2dLoLc=
-github.com/pierrre/go-libs v0.2.3 h1:1HMcoRkqF5u30wXhbHpD2zGXkFxSDg/E/eRIUEKRxa8=
-github.com/pierrre/go-libs v0.2.3/go.mod h1:FmSN8w2gQsbUVYLeImAiOjFy69s63fKaDRAM2lfW+hc=
+github.com/pierrre/go-libs v0.2.5 h1:O95h9vhzeCVdSKbs+AMRqqYtf7uDNLTqJfZ8HCNimUw=
+github.com/pierrre/go-libs v0.2.5/go.mod h1:FmSN8w2gQsbUVYLeImAiOjFy69s63fKaDRAM2lfW+hc=
 github.com/the42/cartconvert v1.0.0 h1:g8kt6ic2GEhdcZ61ZP9GsWwhosVo5nCnH1n2/oAQXUU=
 github.com/the42/cartconvert v1.0.0/go.mod h1:fWO/msnJVhHqN1yX6OBoxSyfj7TEj1hHiL8bJSQsK30=
 golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 h1:k/i9J1pBpvlfR+9QsetwPyERsqu1GIbi967PQMq3Ivc=
