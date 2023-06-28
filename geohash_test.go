@@ -4,14 +4,14 @@ import (
 	"testing"
 
 	"github.com/pierrre/assert"
-	"github.com/pierrre/assert/ext/davecghspew"
 	"github.com/pierrre/assert/ext/pierrrecompare"
 	"github.com/pierrre/assert/ext/pierrreerrors"
+	"github.com/pierrre/assert/ext/pierrrepretty"
 )
 
 func init() {
 	pierrrecompare.Configure()
-	davecghspew.ConfigureDefault()
+	pierrrepretty.ConfigureDefault()
 	pierrreerrors.Configure()
 }
 
