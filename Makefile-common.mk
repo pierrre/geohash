@@ -35,7 +35,9 @@ endif
 test:
 	go test $(VERBOSE_FLAG) -cover -coverprofile=coverage.out ./...
 	go tool cover -func=coverage.out -o=coverage.txt
+ifeq ($(VERBOSE),true)
 	cat coverage.txt
+endif
 	go tool cover -html=coverage.out -o=coverage.html
 
 .PHONY: generate
@@ -178,7 +180,7 @@ ci::
 GO_PROXY_MODULE_TAG_INFO_URL=https://proxy.golang.org/$(GO_MODULE)/@v/$(GITHUB_TAG).info
 .PHONY: ci-tag
 ci-tag:
-	curl $(VERBOSE_FLAG) -fL --fail-with-body $(GO_PROXY_MODULE_TAG_INFO_URL)
+	curl $(VERBOSE_FLAG) -L --fail-with-body $(GO_PROXY_MODULE_TAG_INFO_URL)
 # Print an empty line to separate the output of curl and print the log group properly.
 	@echo ""
 endif
