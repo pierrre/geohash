@@ -118,8 +118,8 @@ lint-rules:
 	# - other directory: shouldn't be separated
 	! find . -name "*.go" | grep "[[:upper:]]"
 
-	# Use Go 1.20 in go.mod.
-	! grep -n "^go " go.mod | grep -v "go 1.20$$"
+	# Use Go 1.21 in go.mod.
+	! grep -n "^go " go.mod | grep -v "go 1.21$$"
 
 .PHONY: mod-update
 mod-update:

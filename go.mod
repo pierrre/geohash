@@ -1,6 +1,6 @@
 module github.com/pierrre/geohash
 
-go 1.20
+go 1.21
 
 require (
 	github.com/Codefor/geohash v0.0.0-20140723084247-1b41c28e3a9d
@@ -15,7 +15,7 @@ require (
 require (
 	github.com/pierrre/compare v1.1.4 // indirect
 	github.com/pierrre/errors v0.4.3 // indirect
-	github.com/pierrre/go-libs v0.2.7 // indirect
+	github.com/pierrre/go-libs v0.2.8 // indirect
 	github.com/pierrre/pretty v0.0.6 // indirect
 	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df // indirect
 )
