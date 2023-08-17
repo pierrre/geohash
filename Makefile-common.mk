@@ -33,7 +33,7 @@ endif
 
 .PHONY: test
 test:
-	go test $(VERBOSE_FLAG) -cover -coverprofile=coverage.out ./...
+	go test $(VERBOSE_FLAG) -fullpath -cover -coverprofile=coverage.out ./...
 	go tool cover -func=coverage.out -o=coverage.txt
 ifeq ($(VERBOSE),true)
 	cat coverage.txt
