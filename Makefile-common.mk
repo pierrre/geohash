@@ -53,7 +53,7 @@ lint:
 # - tag: vX.Y.Z
 # - branch: master
 # - latest
-GOLANGCI_LINT_VERSION?=v1.54.0
+GOLANGCI_LINT_VERSION?=v1.54.1
 # Installation type:
 # - binary
 # - source
