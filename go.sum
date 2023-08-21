@@ -10,8 +10,8 @@ github.com/mmcloughlin/geohash v0.10.0 h1:9w1HchfDfdeLc+jFEf/04D27KP7E2QmpDu52wP
 github.com/mmcloughlin/geohash v0.10.0/go.mod h1:oNZxQo5yWJh0eMQEP/8hwQuVx9Z9tjwFUqcTB1SmG0c=
 github.com/pierrre/assert v0.2.3 h1:b8KT54X6sGEC00d+1ROp91fCwMsZkO2wSW9V9uU4N5E=
 github.com/pierrre/assert v0.2.3/go.mod h1:b8ArVe62QlYd91ue59zYMQ3T7uITCKx/DP2AboufqgA=
-github.com/pierrre/compare v1.1.6 h1:MQieqZkPyBI2gdTxhz0r5MH10C0bsrU3jshQG5x6cMc=
-github.com/pierrre/compare v1.1.6/go.mod h1:0gR1EQJV7zbZhlX5SMuWPR1n9ae/gw/6drZJgL2qLUo=
+github.com/pierrre/compare v1.2.0 h1:f9VQFxS/rg7ahwwkspqthpw7dYTE3iGXtEtzMcWx2mo=
+github.com/pierrre/compare v1.2.0/go.mod h1:zzwQOZHHmnALIAm+yF6IIqknr5xPimC56At+CK7ZFzg=
 github.com/pierrre/errors v0.4.5 h1:s/LAV1nrH7RmV2/SD10MkV+2n4qpeQZJ6BvARcIrozc=
 github.com/pierrre/errors v0.4.5/go.mod h1:BLMLfEjZzKb1cDvn9OkcqR5bmCvJvOuLrwN9jFYVEHM=
 github.com/pierrre/go-libs v0.2.10 h1:RNnMtmEkN3C8sXqOALMa8l6vFqDDJ3H75drqUKpOljA=
