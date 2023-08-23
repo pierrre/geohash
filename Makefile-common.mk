@@ -177,12 +177,9 @@ ci::
 	$(MAKE) ci-tag
 	$(call CI_LOG_GROUP_END)
 
-GO_PROXY_MODULE_TAG_INFO_URL=https://proxy.golang.org/$(GO_MODULE)/@v/$(GITHUB_TAG).info
 .PHONY: ci-tag
 ci-tag:
-	curl $(VERBOSE_FLAG) -L --fail-with-body $(GO_PROXY_MODULE_TAG_INFO_URL)
-# Print an empty line to separate the output of curl and print the log group properly.
-	@echo ""
+	GOPROXY=proxy.golang.org go list -x -m $(GO_MODULE)@$(GITHUB_TAG)
 endif
 
 endif # CI end
