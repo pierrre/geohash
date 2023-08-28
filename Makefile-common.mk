@@ -119,7 +119,7 @@ lint-rules:
 	! find . -name "*.go" | grep "[[:upper:]]"
 
 	# Use Go 1.21 in go.mod.
-	! grep -n "^go " go.mod | grep -v "go 1.21$$"
+	! grep -n "^go " go.mod | grep -v "go 1.21.0$$"
 
 .PHONY: mod-update
 mod-update:
