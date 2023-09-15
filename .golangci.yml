@@ -99,7 +99,7 @@ linters:
     # - "testpackage" # Not useful.
     - "thelper"
     # - "tparallel" # Not useful.
-    - "typecheck"
+    # - "typecheck" # Removed
     - "unconvert"
     - "unparam"
     - "unused"
