@@ -120,7 +120,6 @@ linters-settings:
         deny:
           - pkg: "unsafe"
             desc: "it's not safe"
-
   gocritic:
     enabled-tags:
       - "experimental"
