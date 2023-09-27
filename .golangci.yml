@@ -107,7 +107,7 @@ linters:
     # - "varcheck" # Replaced by unused.
     # - "varnamelen" # Maybe overkill.
     - "wastedassign"
-    # - "whitespace" # Not useful.
+    - "whitespace"
     - "wrapcheck"
     # - "wsl" # Not useful.
     # - "zerologlint" # Not useful.
