@@ -36,6 +36,7 @@ linters:
     # - "ginkgolinter" # Not used.
     # - "gochecknoglobals" # It's OK.
     # - "gochecknoinits" # It's OK.
+    - "gochecksumtype"
     # - "gocognit" # Redundant with gocyclo.
     # - "goconst" # Too many false positive.
     - "gocritic"
@@ -59,6 +60,7 @@ linters:
     - "grouper"
     # - "ifshort" # Deprecated.
     - "importas"
+    - "inamedparam"
     - "ineffassign"
     - "interfacebloat"
     # - "interfacer" # Archived.
@@ -81,21 +83,25 @@ linters:
     # - "nosnakecase" # Deprecated.
     - "nosprintfhostport"
     # - "paralleltest" # Not useful.
+    - "perfsprint"
     - "prealloc"
     - "predeclared"
     - "promlinter"
+    # - "protogetter" # Not useful.
     - "reassign"
     - "revive"
     - "rowserrcheck"
     # - "scopelint" # Replaced by exportloopref.
+    - "sloglint"
     - "sqlclosecheck"
     - "staticcheck"
-    #- "structcheck" # Replaced by unused.
+    # - "structcheck" # Replaced by unused.
     - "stylecheck"
     # - "tagalign" # Not useful.
-    #- "tagliatelle" # Not useful.
+    # - "tagliatelle" # Not useful.
     - "tenv"
     - "testableexamples"
+    # - "testifylint" # Not useful.
     # - "testpackage" # Not useful.
     - "thelper"
     # - "tparallel" # Not useful.
