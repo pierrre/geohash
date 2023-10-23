@@ -12,3 +12,9 @@ updates:
       - dependency-type: "all"
     reviewers:
       - "pierrre"
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "08:00"
+      timezone: "Europe/Paris"
