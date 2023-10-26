@@ -34,6 +34,7 @@ linters:
     # - "funlen" # It causes issues in table driven tests, and cyclomatic complexity is more relevant.
     # - "gci" # Redundant with goimports and grouper.
     # - "ginkgolinter" # Not used.
+    - "gocheckcompilerdirectives"
     # - "gochecknoglobals" # It's OK.
     # - "gochecknoinits" # It's OK.
     - "gochecksumtype"
@@ -138,8 +139,6 @@ linters-settings:
       - "whyNoLint" # We already have the nolintlint linter.
   gocyclo:
     min-complexity: 10
-  gosimple:
-    checks: [ "all" ]
   govet:
     enable-all: true
     disable:
@@ -162,10 +161,6 @@ linters-settings:
           - "disableStutteringCheck"
       - name: "unused-parameter" # It's OK.
         disabled: true
-  staticcheck:
-    checks: [ "all" ]
-  stylecheck:
-    checks: [ "all" ]
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
