@@ -81,7 +81,7 @@ func Encode(lat, lon float64, precision int) string {
 	return string(buf[:precision])
 }
 
-// Decode decode a geohash to a Box.
+// Decode decode a geohash to a [Box].
 func Decode(gh string) (Box, error) {
 	box := defaultBox
 	even := true
@@ -120,7 +120,7 @@ func (b Box) Center() Point {
 	return Point{Lat: b.Lat.Mid(), Lon: b.Lon.Mid()}
 }
 
-// Round returns the Box's approximate location as a Point.
+// Round returns the Box's approximate location as a [Point].
 //
 // It uses decimal rounding and is in general more useful than Center.
 func (b Box) Round() Point {
@@ -171,7 +171,7 @@ type Neighbors struct {
 	NorthWest string
 }
 
-// GetNeighbors returns a struct representing the neighbors of the supplied
+// GetNeighbors returns a struct representing the [Neighbors] of the supplied
 // geohash in each of the cardinal and intercardinal directions.
 func GetNeighbors(gh string) (Neighbors, error) {
 	box, err := Decode(gh)
