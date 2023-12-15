@@ -12,7 +12,7 @@ jobs:
       - name: "Run CI"
         run: make --warn-undefined-variables --no-print-directory ci
       - name: "Upload coverage"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: coverage.*
