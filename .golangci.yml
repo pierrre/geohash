@@ -24,7 +24,6 @@ linters:
     - "errchkjson"
     - "errname"
     - "errorlint"
-    - "execinquery"
     - "exhaustive"
     # - "exhaustivestruct " # Replaced by exhaustruct.
     # - "exhaustruct" # Too many false positive, and not always relevant.
