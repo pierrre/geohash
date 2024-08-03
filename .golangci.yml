@@ -64,6 +64,7 @@ linters:
     - "ineffassign"
     - "interfacebloat"
     # - "interfacer" # Archived.
+    - intrange
     # - "ireturn" # Too many false positive.
     # - "lll" # We don't use punch cards anymore.
     - "loggercheck"

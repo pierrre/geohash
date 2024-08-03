@@ -25,7 +25,7 @@ func init() {
 	for i := range base32Lookup {
 		base32Lookup[i] = -1
 	}
-	for i := 0; i < len(base32); i++ {
+	for i := range len(base32) {
 		base32Lookup[base32[i]] = i
 	}
 }
@@ -56,7 +56,7 @@ func Encode(lat, lon float64, precision int) string {
 	var buf [encodeMaxPrecision]byte
 	box := defaultBox
 	even := true
-	for i := 0; i < precision; i++ {
+	for i := range precision {
 		ci := 0
 		for mask := 1 << 4; mask != 0; mask >>= 1 {
 			var r *Range
@@ -85,7 +85,7 @@ func Encode(lat, lon float64, precision int) string {
 func Decode(gh string) (Box, error) {
 	box := defaultBox
 	even := true
-	for i := 0; i < len(gh); i++ {
+	for i := range len(gh) {
 		ci := base32Lookup[gh[i]]
 		if ci == -1 {
 			return box, fmt.Errorf("geohash decode '%s': invalid character at index %d", gh, i)

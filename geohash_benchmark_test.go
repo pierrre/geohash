@@ -13,13 +13,13 @@ import (
 )
 
 func BenchmarkEncode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		Encode(testPoint.Lat, testPoint.Lon, testPrecision)
 	}
 }
 
 func BenchmarkDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		_, err := Decode(testGeohash)
 		if err != nil {
 			assert.NoError(b, err)
@@ -28,7 +28,7 @@ func BenchmarkDecode(b *testing.B) {
 }
 
 func BenchmarkNeighbors(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		_, err := GetNeighbors(testGeohash)
 		if err != nil {
 			assert.NoError(b, err)
@@ -37,79 +37,79 @@ func BenchmarkNeighbors(b *testing.B) {
 }
 
 func BenchmarkCodeforEncode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		codefor_geohash.Encode(testPoint.Lat, testPoint.Lon)
 	}
 }
 
 func BenchmarkCodeforDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		codefor_geohash.Decode(testGeohash)
 	}
 }
 
 func BenchmarkTomiHiltunenEncode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		tomi_hiltunen_geohash.EncodeWithPrecision(testPoint.Lat, testPoint.Lon, testPrecision)
 	}
 }
 
 func BenchmarkTomiHiltunenDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		tomi_hiltunen_geohash.Decode(testGeohash)
 	}
 }
 
 func BenchmarkTomiHiltunenNeighbors(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		tomi_hiltunen_geohash.CalculateAllAdjacent(testGeohash)
 	}
 }
 
 func BenchmarkBroadyEncode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		broadygeohash.Encode(testPoint.Lat, testPoint.Lon)
 	}
 }
 
 func BenchmarkBroadyDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		broadygeohash.Decode(testGeohash)
 	}
 }
 
 func BenchmarkFanixkEncode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		fanixk_geohash.PrecisionEncode(testPoint.Lat, testPoint.Lon, testPrecision)
 	}
 }
 
 func BenchmarkFanixkDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		fanixk_geohash.DecodeBoundingBox(testGeohash)
 	}
 }
 
 func BenchmarkFanixkNeighbors(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		fanixk_geohash.Neighbors(testGeohash)
 	}
 }
 
 func BenchmarkMmcloughlinEncode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		mmcloughlin_geohash.EncodeWithPrecision(testPoint.Lat, testPoint.Lon, testPrecision)
 	}
 }
 
 func BenchmarkMmcloughlinDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		mmcloughlin_geohash.BoundingBox(testGeohash)
 	}
 }
 
 func BenchmarkMmcloughlinNeighbors(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		fanixk_geohash.Neighbors(testGeohash)
 	}
 }
@@ -122,13 +122,13 @@ func BenchmarkThe42CartconvertEncode(b *testing.B) {
 		El:        the42_cartconvert_geohash.DefaultEllipsoid,
 	}
 	precision := byte(testPrecision)
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		the42_cartconvert_geohash.LatLongToGeoHashBits(pc, precision)
 	}
 }
 
 func BenchmarkThe42CartconvertDecode(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		_, err := the42_cartconvert_geohash.GeoHashToLatLong(testGeohash, the42_cartconvert_geohash.DefaultEllipsoid)
 		if err != nil {
 			assert.NoError(b, err)
