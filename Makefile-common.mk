@@ -7,6 +7,8 @@ noop:
 CI?=false
 ifeq ($(CI),true)
 VERBOSE?=true
+TEST_FULLPATH?=true
+TEST_COVER?=true
 endif
 
 VERBOSE?=false
@@ -31,14 +33,28 @@ ifneq ($(wildcard ./cmd/*),)
 	go build $(VERBOSE_FLAG) -ldflags="-s -w -X main.version=$(VERSION)" -o $(GO_BUILD_DIR) ./cmd/...
 endif
 
+TEST_FULLPATH?=false
+ifeq ($(TEST_FULLPATH),true)
+TEST_FULLPATH_FLAG=-fullpath
+else
+TEST_FULLPATH_FLAG=
+endif
+TEST_COVER?=false
+ifeq ($(TEST_COVER),true)
+TEST_COVER_FLAGS=-cover -coverprofile=coverage.out
+else
+TEST_COVER_FLAGS=
+endif
 .PHONY: test
 test:
-	go test $(VERBOSE_FLAG) -fullpath -cover -coverprofile=coverage.out ./...
+	go test $(VERBOSE_FLAG) $(TEST_FULLPATH_FLAG) $(TEST_COVER_FLAGS) ./...
+ifeq ($(TEST_COVER),true)
 	go tool cover -func=coverage.out -o=coverage.txt
 ifeq ($(VERBOSE),true)
 	cat coverage.txt
 endif
 	go tool cover -html=coverage.out -o=coverage.html
+endif
 
 .PHONY: generate
 generate::
