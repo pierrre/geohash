@@ -1,6 +1,9 @@
 .DEFAULT_GOAL=noop
 .DELETE_ON_ERROR:
 
+NULL:=
+SPACE:=$(NULL) $(NULL)
+
 .PHONY: noop
 noop:
 
@@ -13,7 +16,7 @@ endif
 
 VERBOSE?=false
 ifeq ($(VERBOSE),true)
-VERBOSE_FLAG=-v
+VERBOSE_FLAG=$(SPACE)-v
 else
 VERBOSE_FLAG=
 endif
@@ -23,42 +26,67 @@ VERSION?=$(shell (git describe --tags --exact-match 2> /dev/null || git rev-pars
 version:
 	@echo $(VERSION)
 
-GO_MODULE=$(shell go list -m)
+GO?=go
+GO_RUN=$(GO) run$(VERBOSE_FLAG)
+GO_GET=$(GO) get$(VERBOSE_FLAG)
+GO_LIST=$(GO) list$(VERBOSE_FLAG)
+GO_MOD=$(GO) mod
+GO_TOOL=$(GO) tool
+GO_TOOL_COVER=$(GO_TOOL) cover
 
-GO_BUILD_DIR=build
+GO_MODULE=$(shell $(GO_LIST) -m)
+
+GO_TAGS?=
+GO_PURE?=false
+ifeq ($(GO_PURE),true)
+override GO_TAGS:=$(GO_TAGS),purego
+endif
+ifneq ($(GO_TAGS),)
+GO_TAGS_FLAG=$(SPACE)-tags=$(GO_TAGS)
+else
+GO_TAGS_FLAG=
+endif
+
+BUILD_DIR=build
 .PHONY: build
 build:
-ifneq ($(wildcard ./cmd/*),)
-	mkdir -p $(GO_BUILD_DIR)
-	go build $(VERBOSE_FLAG) -ldflags="-s -w -X main.version=$(VERSION)" -o $(GO_BUILD_DIR) ./cmd/...
+ifneq ($(wildcard ./cmd/*/*.go),)
+	mkdir -p $(BUILD_DIR)
+	$(GO) build$(VERBOSE_FLAG)$(GO_TAGS_FLAG) -ldflags="-s -w -X main.version=$(VERSION)" -o $(BUILD_DIR) ./cmd/...
 endif
 
 TEST_FULLPATH?=false
 ifeq ($(TEST_FULLPATH),true)
-TEST_FULLPATH_FLAG=-fullpath
+TEST_FULLPATH_FLAG=$(SPACE)-fullpath
 else
 TEST_FULLPATH_FLAG=
 endif
 TEST_COVER?=false
 ifeq ($(TEST_COVER),true)
-TEST_COVER_FLAGS=-cover -coverprofile=coverage.out
+TEST_COVER_FLAGS=$(SPACE)-cover -coverprofile=coverage.out
 else
 TEST_COVER_FLAGS=
 endif
+TEST_COUNT?=
+ifneq ($(TEST_COUNT),)
+TEST_COUNT_FLAG=$(SPACE)-count=$(TEST_COUNT)
+else
+TEST_COUNT_FLAG=
+endif
 .PHONY: test
 test:
-	go test $(VERBOSE_FLAG) $(TEST_FULLPATH_FLAG) $(TEST_COVER_FLAGS) ./...
+	$(GO) test$(VERBOSE_FLAG)$(TEST_FULLPATH_FLAG)$(GO_TAGS_FLAG)$(TEST_COVER_FLAGS)$(TEST_COUNT_FLAG) ./...
 ifeq ($(TEST_COVER),true)
-	go tool cover -func=coverage.out -o=coverage.txt
+	$(GO_TOOL_COVER) -func=coverage.out -o=coverage.txt
 ifeq ($(VERBOSE),true)
 	cat coverage.txt
 endif
-	go tool cover -html=coverage.out -o=coverage.html
+	$(GO_TOOL_COVER) -html=coverage.out -o=coverage.html
 endif
 
 .PHONY: generate
 generate::
-	go generate $(VERBOSE_FLAG) ./...
+	$(GO) generate$(VERBOSE_FLAG) ./...
 
 .PHONY: lint
 lint:
@@ -77,24 +105,24 @@ GOLANGCI_LINT_TYPE?=binary
 
 ifeq ($(GOLANGCI_LINT_TYPE),binary)
 
-GOLANGCI_LINT_DIR=$(shell go env GOPATH)/pkg/golangci-lint/$(GOLANGCI_LINT_VERSION)
+GOLANGCI_LINT_DIR=$(shell $(GO) env GOPATH)/pkg/golangci-lint/$(GOLANGCI_LINT_VERSION)
 GOLANGCI_LINT_BIN=$(GOLANGCI_LINT_DIR)/golangci-lint
 
 $(GOLANGCI_LINT_BIN):
-	curl $(VERBOSE_FLAG) -fL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(GOLANGCI_LINT_DIR) $(GOLANGCI_LINT_VERSION)
+	curl$(VERBOSE_FLAG) -fL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(GOLANGCI_LINT_DIR) $(GOLANGCI_LINT_VERSION)
 
 .PHONY: install-golangci-lint
 install-golangci-lint: $(GOLANGCI_LINT_BIN)
 
 else ifeq ($(GOLANGCI_LINT_TYPE),source)
 
-GOLANGCI_LINT_BIN=go run $(VERBOSE_FLAG) github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
+GOLANGCI_LINT_BIN=$(GO_RUN) github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
 
 install-golangci-lint:
 
 endif
 
-GOLANGCI_LINT_RUN=$(GOLANGCI_LINT_BIN) $(VERBOSE_FLAG) run
+GOLANGCI_LINT_RUN=$(GOLANGCI_LINT_BIN)$(VERBOSE_FLAG) run
 .PHONY: golangci-lint
 golangci-lint: install-golangci-lint
 ifeq ($(CI),true)
@@ -139,12 +167,17 @@ lint-rules:
 
 .PHONY: mod-update
 mod-update:
-	go get $(VERBOSE_FLAG) -u all
+	$(GO_GET) -u all
+	$(MAKE) mod-tidy
+
+.PHONY: mod-update-pierrre
+mod-update-pierrre:
+	GOWORK=off $(GO_LIST) -m -u -json all | jq -r 'select(.Main==null and (.Path | startswith("github.com/pierrre/")) and .Update!=null) | .Path' | xargs -I {} -t $(GO_GET) -u {}
 	$(MAKE) mod-tidy
 
 .PHONY: mod-tidy
 mod-tidy:
-	go mod tidy $(VERBOSE_FLAG)
+	$(GO_MOD) tidy$(VERBOSE_FLAG)
 
 .PHONY: git-latest-release
 git-latest-release:
@@ -195,7 +228,7 @@ ci::
 
 .PHONY: ci-tag
 ci-tag:
-	GOPROXY=proxy.golang.org go list -x -m $(GO_MODULE)@$(GITHUB_TAG)
+	GOPROXY=proxy.golang.org $(GO_LIST) -x -m $(GO_MODULE)@$(GITHUB_TAG)
 endif
 
 endif # CI end
