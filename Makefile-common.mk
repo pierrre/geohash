@@ -37,10 +37,6 @@ GO_TOOL_COVER=$(GO_TOOL) cover
 GO_MODULE=$(shell $(GO_LIST) -m)
 
 GO_TAGS?=
-GO_PURE?=false
-ifeq ($(GO_PURE),true)
-override GO_TAGS:=$(GO_TAGS),purego
-endif
 ifneq ($(GO_TAGS),)
 GO_TAGS_FLAG=$(SPACE)-tags=$(GO_TAGS)
 else
