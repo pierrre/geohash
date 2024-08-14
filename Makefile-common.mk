@@ -93,7 +93,7 @@ lint:
 # - tag: vX.Y.Z
 # - branch: master
 # - latest
-GOLANGCI_LINT_VERSION?=v1.59.1
+GOLANGCI_LINT_VERSION?=v1.60.1
 # Installation type:
 # - binary
 # - source
@@ -158,8 +158,8 @@ lint-rules:
 	# - other directory: shouldn't be separated
 	! find . -name "*.go" | grep "[[:upper:]]"
 
-	# Use Go 1.22 in go.mod.
-	! grep -n "^go " go.mod | grep -v "go 1.22.0$$"
+	# Use Go 1.23 in go.mod.
+	! grep -n "^go " go.mod | grep -v "go 1.23.0$$"
 
 .PHONY: mod-update
 mod-update:
