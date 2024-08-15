@@ -88,6 +88,7 @@ generate::
 lint:
 	$(MAKE) golangci-lint
 	$(MAKE) lint-rules
+	$(MAKE) mod-tidy-diff
 
 # version:
 # - tag: vX.Y.Z
@@ -174,6 +175,10 @@ mod-update-pierrre:
 .PHONY: mod-tidy
 mod-tidy:
 	$(GO_MOD) tidy$(VERBOSE_FLAG)
+
+.PHONY: mod-tidy-diff
+mod-tidy-diff:
+	$(GO_MOD) tidy$(VERBOSE_FLAG) -diff
 
 .PHONY: git-latest-release
 git-latest-release:
