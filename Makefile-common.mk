@@ -88,7 +88,7 @@ generate::
 lint:
 	$(MAKE) golangci-lint
 	$(MAKE) lint-rules
-	$(MAKE) mod-tidy-diff
+	$(MAKE) mod-tidy
 
 # version:
 # - tag: vX.Y.Z
@@ -172,13 +172,14 @@ mod-update-pierrre:
 	GOWORK=off $(GO_LIST) -m -u -json all | jq -r 'select(.Main==null and (.Path | startswith("github.com/pierrre/")) and .Update!=null) | .Path' | xargs -I {} -t $(GO_GET) -u {}
 	$(MAKE) mod-tidy
 
+MOD_TIDY=$(GO_MOD) tidy$(VERBOSE_FLAG)
 .PHONY: mod-tidy
 mod-tidy:
-	$(GO_MOD) tidy$(VERBOSE_FLAG)
-
-.PHONY: mod-tidy-diff
-mod-tidy-diff:
-	$(GO_MOD) tidy$(VERBOSE_FLAG) -diff
+ifeq ($(CI),true)
+	$(MOD_TIDY) -diff
+else
+	$(MOD_TIDY)
+endif
 
 .PHONY: git-latest-release
 git-latest-release:
