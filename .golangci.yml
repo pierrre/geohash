@@ -12,6 +12,7 @@ linters:
     - "bodyclose"
     - "containedctx"
     - "contextcheck"
+    - "copyloopvar"
     # - "cyclop" # Redundant with gocyclo.
     # - "deadcode" # Replaced by unused.
     # - "decorder" # Maybe overkill.
@@ -27,7 +28,7 @@ linters:
     - "exhaustive"
     # - "exhaustivestruct " # Replaced by exhaustruct.
     # - "exhaustruct" # Too many false positive, and not always relevant.
-    - "exportloopref"
+    # - "exportloopref" # Deprecated and replaced by copyloopvar.
     - "forbidigo"
     - "forcetypeassert"
     # - "funlen" # It causes issues in table driven tests, and cyclomatic complexity is more relevant.
