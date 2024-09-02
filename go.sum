@@ -8,13 +8,13 @@ github.com/fanixk/geohash v0.0.0-20150324002647-c1f9b5fa157a h1:Fyfh/dsHFrC6nkX7
 github.com/fanixk/geohash v0.0.0-20150324002647-c1f9b5fa157a/go.mod h1:UgNw+PTmmGN8rV7RvjvnBMsoTU8ZXXnaT3hYsDTBlgQ=
 github.com/mmcloughlin/geohash v0.10.0 h1:9w1HchfDfdeLc+jFEf/04D27KP7E2QmpDu52wPbJWRE=
 github.com/mmcloughlin/geohash v0.10.0/go.mod h1:oNZxQo5yWJh0eMQEP/8hwQuVx9Z9tjwFUqcTB1SmG0c=
-github.com/pierrre/assert v0.5.3 h1:DJ9M/Ql10aFM73ewxQtJnX4qtaic5045ZiYMrKxEGbk=
-github.com/pierrre/assert v0.5.3/go.mod h1:qfvLvU4ZUB6feCDjQT80Wp21k23p5j4LhKR4cVr1F30=
+github.com/pierrre/assert v0.5.4 h1:Wbb7TyW8OWq5DB/XW3gn8gOXFs6R8sMh9pYNFB1LIK8=
+github.com/pierrre/assert v0.5.4/go.mod h1:lNHj1/56dV1x0bHmGFntP8fe5nGr83Sji6ZljSAJL+0=
 github.com/pierrre/compare v1.4.10 h1:79reqKizcG04/9gw36nZ1zX9KUHx9l3JK13B4kZy0ts=
 github.com/pierrre/compare v1.4.10/go.mod h1:BOhu0I/xlf4sEQv0eygRWhGmJwsz1KCzfeVBuR+topM=
 github.com/pierrre/go-libs v0.7.6 h1:BfsqqMVko+I7PtJhjNYLcQIcnk8Pf5mKh8YODk95t5Y=
 github.com/pierrre/go-libs v0.7.6/go.mod h1:1D/vaaV/r96umFnv1DkgxzCBoMVuauAXmfnWp/D2+y8=
-github.com/pierrre/pretty v0.5.4 h1:PDf1FYbWPJiv9GIfqbJ9A3vrQvf74aZukNmCl9af8DI=
-github.com/pierrre/pretty v0.5.4/go.mod h1:uWYVnbl2WseO2nYFIFFWVrki0NNvNKs5aOLV4nuR7iI=
+github.com/pierrre/pretty v0.6.1 h1:HhK9zajhm9jSXGEP+ewkDgVfV8MFnRFr6PuIWknUyTY=
+github.com/pierrre/pretty v0.6.1/go.mod h1:jFKtB43wPMo2UYASJ7JtO6zzC1Zh/6LaAJF5RBZ0qKw=
 github.com/the42/cartconvert v1.0.0 h1:g8kt6ic2GEhdcZ61ZP9GsWwhosVo5nCnH1n2/oAQXUU=
 github.com/the42/cartconvert v1.0.0/go.mod h1:fWO/msnJVhHqN1yX6OBoxSyfj7TEj1hHiL8bJSQsK30=
