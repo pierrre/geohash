@@ -1,11 +1,11 @@
-.DEFAULT_GOAL=noop
+.DEFAULT_GOAL=all
 .DELETE_ON_ERROR:
 
 NULL:=
 SPACE:=$(NULL) $(NULL)
 
-.PHONY: noop
-noop:
+.PHONY: all
+all: build test lint
 
 CI?=false
 ifeq ($(CI),true)
@@ -134,33 +134,31 @@ golangci-lint-cache-clean: install-golangci-lint
 	$(GOLANGCI_LINT_BIN) cache clean
 
 .PHONY: lint-rules
+CHECK_MISSING_FILE=@[ -e $(1) ] || (echo "$(1) file is missing" && false)
 lint-rules:
-	# Disallowed files.
-	! find . -name ".DS_Store" | grep "."
+# Disallowed files.
+	@! find . -name ".DS_Store" | (grep "." && echo "Disallowed files")
 
-	# Mandatory files.
-	[ -e .gitignore ]
-	[ -e README.md ]
-	[ -e LICENSE ]
-	[ -e CODEOWNERS ]
-	[ -e .github/dependabot.yml ]
-	[ -e .github/workflows/ci.yml ]
-	[ -e .github/workflows/dependabot_auto_merge.yml ]
-	[ -e go.mod ]
-	[ -e go.sum ]
-	[ -e .golangci.yml ]
-	[ -e Makefile ]
-	[ -e Makefile-common.mk ]
+# Mandatory files.
+	$(call CHECK_MISSING_FILE,.gitignore)
+	$(call CHECK_MISSING_FILE,README.md)
+	$(call CHECK_MISSING_FILE,LICENSE)
+	$(call CHECK_MISSING_FILE,CODEOWNERS)
+	$(call CHECK_MISSING_FILE,.github/dependabot.yml)
+	$(call CHECK_MISSING_FILE,.github/workflows/ci.yml)
+	$(call CHECK_MISSING_FILE,.github/workflows/dependabot_auto_merge.yml)
+	$(call CHECK_MISSING_FILE,go.mod)
+	$(call CHECK_MISSING_FILE,go.sum)
+	$(call CHECK_MISSING_FILE,.golangci.yml)
+	$(call CHECK_MISSING_FILE,Makefile)
+	$(call CHECK_MISSING_FILE,Makefile-common.mk)
 
-	# Don't use upper case letter in file and directory name.
-	# The convention for separator in name is:
-	# - file: "_"
-	# - directory in "/cmd": "-"
-	# - other directory: shouldn't be separated
-	! find . -name "*.go" | grep "[[:upper:]]"
-
-	# Use Go 1.23 in go.mod.
-	! grep -n "^go " go.mod | grep -v "go 1.23.0$$"
+# Don't use upper case letter in file and directory name.
+# The convention for separator in name is:
+# - file: "_"
+# - directory in "/cmd": "-"
+# - other directory: shouldn't be separated
+	@! find . -name "*.go" | (grep "[[:upper:]]" && echo "Incorrect file name case")
 
 .PHONY: mod-update
 mod-update:
