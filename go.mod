@@ -1,6 +1,6 @@
 module github.com/pierrre/geohash
 
-go 1.23.0
+go 1.24.0
 
 require (
 	github.com/Codefor/geohash v0.0.0-20140723084247-1b41c28e3a9d

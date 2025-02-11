@@ -98,7 +98,7 @@ GOLANGCI_LINT_VERSION?=v1.63.4
 # Installation type:
 # - binary
 # - source
-GOLANGCI_LINT_TYPE?=binary
+GOLANGCI_LINT_TYPE?=source
 
 ifeq ($(GOLANGCI_LINT_TYPE),binary)
 
