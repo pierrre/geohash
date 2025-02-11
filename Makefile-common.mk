@@ -94,11 +94,11 @@ lint:
 # - tag: vX.Y.Z
 # - branch: master
 # - latest
-GOLANGCI_LINT_VERSION?=v1.63.4
+GOLANGCI_LINT_VERSION?=v1.64.2
 # Installation type:
 # - binary
 # - source
-GOLANGCI_LINT_TYPE?=source
+GOLANGCI_LINT_TYPE?=binary
 
 ifeq ($(GOLANGCI_LINT_TYPE),binary)
 
