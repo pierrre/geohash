@@ -100,7 +100,7 @@ linters:
     - "stylecheck"
     # - "tagalign" # Not useful.
     # - "tagliatelle" # Not useful.
-    - "tenv"
+    # - "tenv" # Deprecated
     - "testableexamples"
     # - "testifylint" # Not useful.
     # - "testpackage" # Not useful.
@@ -111,6 +111,7 @@ linters:
     - "unparam"
     - "unused"
     - "usestdlibvars"
+    - "usetesting"
     # - "varcheck" # Replaced by unused.
     # - "varnamelen" # Maybe overkill.
     - "wastedassign"
