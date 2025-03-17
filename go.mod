@@ -2,6 +2,8 @@ module github.com/pierrre/geohash
 
 go 1.24.0
 
+toolchain go1.24.1
+
 require (
 	github.com/Codefor/geohash v0.0.0-20140723084247-1b41c28e3a9d
 	github.com/TomiHiltunen/geohash-golang v0.0.0-20150112065804-b3e4e625abfb
@@ -15,5 +17,5 @@ require (
 require (
 	github.com/pierrre/compare v1.4.13 // indirect
 	github.com/pierrre/go-libs v0.10.4 // indirect
-	github.com/pierrre/pretty v0.11.7 // indirect
+	github.com/pierrre/pretty v0.11.8 // indirect
 )
