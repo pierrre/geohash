@@ -1,168 +1,136 @@
-run:
-  timeout: "10m"
-output:
-  sort-results: true
+version: "2"
 linters:
-  disable-all: true
+  default: none
   enable:
-    - "asasalint"
-    - "asciicheck"
-    - "bidichk"
-    - "bodyclose"
-    - "containedctx"
-    - "contextcheck"
-    - "copyloopvar"
-    # - "cyclop" # Redundant with gocyclo.
-    # - "deadcode" # Replaced by unused.
-    # - "decorder" # Maybe overkill.
-    - "depguard"
-    - "dogsled"
-    - "dupl"
-    # - "dupword" # Not useful.
-    - "durationcheck"
-    - "errcheck"
-    - "errchkjson"
-    - "errname"
-    - "errorlint"
-    - "exhaustive"
-    # - "exhaustivestruct " # Replaced by exhaustruct.
-    # - "exhaustruct" # Too many false positive, and not always relevant.
-    # - "exportloopref" # Deprecated and replaced by copyloopvar.
-    - "forbidigo"
-    - "forcetypeassert"
-    # - "funlen" # It causes issues in table driven tests, and cyclomatic complexity is more relevant.
-    # - "gci" # Redundant with goimports and grouper.
-    # - "ginkgolinter" # Not used.
-    - "gocheckcompilerdirectives"
-    # - "gochecknoglobals" # It's OK.
-    # - "gochecknoinits" # It's OK.
-    - "gochecksumtype"
-    # - "gocognit" # Redundant with gocyclo.
-    # - "goconst" # Too many false positive.
-    - "gocritic"
-    - "gocyclo"
-    - "godot"
-    # - "godox" # Should not be reported as error.
-    # - "goerr113" # Not useful.
-    - "gofmt"
-    - "gofumpt"
-    # - "goheader" # Not useful.
-    - "goimports"
-    # - "golint" # Replaced by revive.
-    # - "gomnd" # Too many false positive.
-    # - "gomoddirectives" # Not useful.
-    # - "gomodguard" # Redundant with depguard.
-    - "goprintffuncname"
-    - "gosec"
-    - "gosimple"
-    # - "gosmopolitan" # Not useful.
-    - "govet"
-    - "grouper"
-    # - "ifshort" # Deprecated.
-    - "importas"
-    - "inamedparam"
-    - "ineffassign"
-    - "interfacebloat"
-    # - "interfacer" # Archived.
+    - asasalint
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - copyloopvar
+    - depguard
+    - dogsled
+    - dupl
+    - durationcheck
+    - errcheck
+    - errchkjson
+    - errname
+    - errorlint
+    - exhaustive
+    - forbidigo
+    - forcetypeassert
+    - gocheckcompilerdirectives
+    - gochecksumtype
+    - gocritic
+    - gocyclo
+    - godot
+    - goprintffuncname
+    - gosec
+    - govet
+    - grouper
+    - importas
+    - inamedparam
+    - ineffassign
+    - interfacebloat
     - intrange
-    # - "ireturn" # Too many false positive.
-    # - "lll" # We don't use punch cards anymore.
-    - "loggercheck"
-    # - "maintidx" # Redundant with gocyclo.
-    - "makezero"
-    # - "maligned" # Replaced by govet 'fieldalignment'.
-    - "mirror"
-    - "misspell"
-    - "nakedret"
-    - "nestif"
-    - "nilerr"
-    - "nilnil"
-    # - "nlreturn" # Is that a good practice ?
-    - "noctx"
-    - "nolintlint"
-    # - "nonamedreturns" # Named returns are OK.
-    # - "nosnakecase" # Deprecated.
-    - "nosprintfhostport"
-    # - "paralleltest" # Not useful.
-    - "perfsprint"
-    - "prealloc"
-    - "predeclared"
-    - "promlinter"
-    # - "protogetter" # Not useful.
-    - "reassign"
-    - "revive"
-    - "rowserrcheck"
-    # - "scopelint" # Replaced by exportloopref.
-    - "sloglint"
-    - "sqlclosecheck"
-    - "staticcheck"
-    # - "structcheck" # Replaced by unused.
-    - "stylecheck"
-    # - "tagalign" # Not useful.
-    # - "tagliatelle" # Not useful.
-    # - "tenv" # Deprecated
-    - "testableexamples"
-    # - "testifylint" # Not useful.
-    # - "testpackage" # Not useful.
-    - "thelper"
-    # - "tparallel" # Not useful.
-    # - "typecheck" # Removed
-    - "unconvert"
-    - "unparam"
-    - "unused"
-    - "usestdlibvars"
-    - "usetesting"
-    # - "varcheck" # Replaced by unused.
-    # - "varnamelen" # Maybe overkill.
-    - "wastedassign"
-    - "whitespace"
-    - "wrapcheck"
-    # - "wsl" # Not useful.
-    # - "zerologlint" # Not useful.
-linters-settings:
-  depguard:
-    rules:
-      main:
-        files:
-          - "$all"
-        deny:
-          - pkg: "unsafe"
-            desc: "it's not safe"
-  gocritic:
-    enabled-tags:
-      - "experimental"
-      - "diagnostic"
-      - "opinionated"
-      - "performance"
-      - "style"
-    disabled-checks:
-      - "paramTypeCombine" # Some false positive.
-      - "whyNoLint" # We already have the nolintlint linter.
-  gocyclo:
-    min-complexity: 10
-  govet:
-    enable-all: true
-    disable:
-      - "fieldalignment" # Too many false positive.
-  grouper:
-    import-require-single-import: true
-    import-require-grouping: true
-  nolintlint:
-    allow-unused: false
-    allow-no-explanation:
-      - "errcheck"
-      - "misspell"
-    require-explanation: true
-    require-specific: true
-  revive:
-    rules:
-      - name: "exported"
-        disabled: false
-        arguments:
-          - "disableStutteringCheck"
-      - name: "unused-parameter" # It's OK.
-        disabled: true
+    - loggercheck
+    - makezero
+    - mirror
+    - misspell
+    - nakedret
+    - nestif
+    - nilerr
+    - nilnil
+    - noctx
+    - nolintlint
+    - nosprintfhostport
+    - perfsprint
+    - prealloc
+    - predeclared
+    - promlinter
+    - reassign
+    - revive
+    - rowserrcheck
+    - sloglint
+    - sqlclosecheck
+    - staticcheck
+    - testableexamples
+    - thelper
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - usetesting
+    - wastedassign
+    - whitespace
+    - wrapcheck
+  settings:
+    depguard:
+      rules:
+        main:
+          files:
+            - $all
+          deny:
+            - pkg: unsafe
+              desc: "it's not safe"
+    gocritic:
+      enabled-tags:
+        - experimental
+        - diagnostic
+        - opinionated
+        - performance
+        - style
+      disabled-checks:
+        - paramTypeCombine # Some false positive.
+        - whyNoLint # We already have the nolintlint linter.
+    gocyclo:
+      min-complexity: 10
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment # Too many false positive.
+    grouper:
+      import-require-single-import: true
+      import-require-grouping: true
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+      allow-no-explanation:
+        - errcheck
+        - misspell
+      allow-unused: false
+    revive:
+      rules:
+        - name: exported
+          disabled: false
+          arguments:
+            - disableStutteringCheck
+        - name: unused-parameter # It's OK.
+          disabled: true
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
 issues:
   max-issues-per-linter: 0
   max-same-issues: 1
   uniq-by-line: true
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - goimports
+  # exclusions:
+  #   generated: lax
+  #   paths:
+  #     - third_party$
+  #     - builtin$
+  #     - examples$
