@@ -108,29 +108,23 @@ linters:
             - disableStutteringCheck
         - name: unused-parameter # It's OK.
           disabled: true
+    staticcheck:
+      checks:
+        - all
   exclusions:
     generated: lax
-    presets:
-      - comments
-      - common-false-positives
-      - legacy
-      - std-error-handling
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
-issues:
-  max-issues-per-linter: 0
-  max-same-issues: 1
-  uniq-by-line: true
 formatters:
   enable:
     - gofmt
     - gofumpt
     - goimports
-  # exclusions:
-  #   generated: lax
-  #   paths:
-  #     - third_party$
-  #     - builtin$
-  #     - examples$
+  exclusions:
+    generated: lax
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+output:
+  sort-order:
+    - file
+    - linter
+    - severity

@@ -86,7 +86,7 @@ func processArgs() error {
 		}
 		results = append(results, result)
 	}
-	fmt.Fprintln(os.Stdout, strings.Join(results, " "))
+	_, _ = fmt.Fprintln(os.Stdout, strings.Join(results, " "))
 	return nil
 }
 
@@ -102,9 +102,9 @@ func processStdin() error {
 		if first {
 			first = false
 		} else {
-			fmt.Fprint(os.Stdout, " ")
+			_, _ = fmt.Fprint(os.Stdout, " ")
 		}
-		fmt.Fprint(os.Stdout, result)
+		_, _ = fmt.Fprint(os.Stdout, result)
 	}
 	err := scanner.Err()
 	if err != nil {
