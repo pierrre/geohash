@@ -14,7 +14,7 @@ github.com/pierrre/compare v1.4.13 h1:b6gi3OgN1emmD1Ly37m+B/Pbq6tac+w3lNGT5xu4I1
 github.com/pierrre/compare v1.4.13/go.mod h1:+ie0ecM2nS32oLck0FWDstwIUSZ0YF4KBIaACOvKhJM=
 github.com/pierrre/go-libs v0.12.1 h1:fMJMCf2YMkBXeJW9fY4w053O8ap0633em8bZdxlsELE=
 github.com/pierrre/go-libs v0.12.1/go.mod h1:gOMVJns4bNbvshF1+nCI+cxo6r4VrY7WQdAAEyy9jTI=
-github.com/pierrre/pretty v0.11.9 h1:iNyDzH10WZmdboJtp2L7QrZxpMwPLBHJ0igqM9U62f0=
-github.com/pierrre/pretty v0.11.9/go.mod h1:ugeYd3eWjwmhugZxM4loqkESx7vO70zFS3ok8supo2A=
+github.com/pierrre/pretty v0.11.10 h1:1/FGtgh+2OfR3I8lzwy8v9+aDSj4ds8vCuEJfqjKd/4=
+github.com/pierrre/pretty v0.11.10/go.mod h1:fu/nEkuheM2DmEZcSIdn6jRsUSzzdCOrqp7VReDOXdU=
 github.com/the42/cartconvert v1.0.0 h1:g8kt6ic2GEhdcZ61ZP9GsWwhosVo5nCnH1n2/oAQXUU=
 github.com/the42/cartconvert v1.0.0/go.mod h1:fWO/msnJVhHqN1yX6OBoxSyfj7TEj1hHiL8bJSQsK30=
