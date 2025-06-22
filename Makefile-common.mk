@@ -21,13 +21,20 @@ else
 VERBOSE_FLAG=
 endif
 
+RACE?=false
+ifeq ($(RACE),true)
+RACE_FLAG=$(SPACE)-race
+else
+RACE_FLAG=
+endif
+
 VERSION?=$(shell (git describe --tags --exact-match 2> /dev/null || git rev-parse HEAD) | sed "s/^v//")
 .PHONY: version
 version:
 	@echo $(VERSION)
 
 GO?=go
-GO_RUN=$(GO) run$(VERBOSE_FLAG)
+GO_RUN=$(GO) run$(VERBOSE_FLAG)$(RACE_FLAG)
 GO_GET=$(GO) get$(VERBOSE_FLAG)
 GO_LIST=$(GO) list$(VERBOSE_FLAG)
 GO_MOD=$(GO) mod
@@ -48,7 +55,7 @@ BUILD_DIR=build
 build:
 ifneq ($(wildcard ./cmd/*/*.go),)
 	mkdir -p $(BUILD_DIR)
-	$(GO) build$(VERBOSE_FLAG)$(GO_TAGS_FLAG) -ldflags="-s -w -X main.version=$(VERSION)" -o $(BUILD_DIR) ./cmd/...
+	$(GO) build$(VERBOSE_FLAG)$(RACE_FLAG)$(GO_TAGS_FLAG) -ldflags="-s -w -X main.version=$(VERSION)" -o $(BUILD_DIR) ./cmd/...
 endif
 
 TEST_FULLPATH?=false
@@ -71,7 +78,7 @@ TEST_COUNT_FLAG=
 endif
 .PHONY: test
 test:
-	$(GO) test$(VERBOSE_FLAG)$(TEST_FULLPATH_FLAG)$(GO_TAGS_FLAG)$(TEST_COVER_FLAGS)$(TEST_COUNT_FLAG) ./...
+	$(GO) test$(VERBOSE_FLAG)$(RACE_FLAG)$(TEST_FULLPATH_FLAG)$(GO_TAGS_FLAG)$(TEST_COVER_FLAGS)$(TEST_COUNT_FLAG) ./...
 ifeq ($(TEST_COVER),true)
 	$(GO_TOOL_COVER) -func=coverage.out -o=coverage.txt
 ifeq ($(VERBOSE),true)
