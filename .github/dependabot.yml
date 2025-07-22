@@ -10,8 +10,6 @@ updates:
       - dependency-type: "direct"
       - dependency-type: "indirect"
       - dependency-type: "all"
-    reviewers:
-      - "pierrre"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
