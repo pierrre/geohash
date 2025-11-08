@@ -111,6 +111,10 @@ linters:
     staticcheck:
       checks:
         - all
+    wrapcheck:
+      ignore-package-globs:
+        - errors
+        - github.com/pierrre/errors*
   exclusions:
     generated: lax
 formatters:
