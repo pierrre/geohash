@@ -151,10 +151,7 @@ func (r Range) Mid() float64 {
 //
 // It uses decimal rounding.
 func (r Range) Round() float64 {
-	dec := int(math.Floor(-math.Log10(r.Val())))
-	if dec < 0 {
-		dec = 0
-	}
+	dec := max(int(math.Floor(-math.Log10(r.Val()))), 0)
 	return roundDecimal(r.Mid(), dec)
 }
 
