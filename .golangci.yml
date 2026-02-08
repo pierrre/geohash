@@ -76,12 +76,7 @@ linters:
             - pkg: unsafe
               desc: "it's not safe"
     gocritic:
-      enabled-tags:
-        - experimental
-        - diagnostic
-        - opinionated
-        - performance
-        - style
+      enable-all: true
       disabled-checks:
         - paramTypeCombine # Some false positive.
         - whyNoLint # We already have the nolintlint linter.
