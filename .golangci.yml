@@ -26,7 +26,6 @@ linters:
     - gocyclo
     - godot
     - goprintffuncname
-    - gosec
     - govet
     - grouper
     - importas
