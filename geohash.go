@@ -81,7 +81,7 @@ func Encode(lat, lon float64, precision int) string {
 	return string(buf[:precision])
 }
 
-// Decode decode a geohash to a [Box].
+// Decode decodes a geohash to a [Box].
 func Decode(gh string) (Box, error) {
 	box := defaultBox
 	even := true
@@ -142,7 +142,7 @@ func (r Range) Val() float64 {
 	return math.Abs(r.Max - r.Min)
 }
 
-// Mid return the middle value between Min and Max.
+// Mid returns the middle value between Min and Max.
 func (r Range) Mid() float64 {
 	return (r.Min + r.Max) / 2
 }
