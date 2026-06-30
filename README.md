@@ -9,4 +9,4 @@ A geohash library for Go (Golang)
 - Encode latitude/longitude to geohash
 - Decode geohash to latitude/longitude
 - Round a geohash box to a single location
-- [Commande-line tool](https://pkg.go.dev/github.com/pierrre/geohash/cmd/geohash)
+- [Command-line tool](https://pkg.go.dev/github.com/pierrre/geohash/cmd/geohash)

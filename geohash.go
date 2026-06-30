@@ -1,7 +1,7 @@
 /*
 Package geohash provides an implementation of geohash.
 
-http://en.wikipedia.com/wiki/Geohash
+http://en.wikipedia.org/wiki/Geohash
 
 http://geohash.org
 */
