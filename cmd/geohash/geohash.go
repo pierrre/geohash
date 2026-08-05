@@ -123,7 +123,7 @@ func processValue(v string) (string, error) {
 func processLatLon(latLon string) (string, error) {
 	latLonSplit := strings.Split(latLon, ",")
 	if len(latLonSplit) != 2 {
-		return "", fmt.Errorf("'%s'' is not a valid location (lat,lon)", latLon)
+		return "", fmt.Errorf("%q is not a valid location (lat,lon)", latLon)
 	}
 
 	lat, err := strconv.ParseFloat(latLonSplit[0], 64)

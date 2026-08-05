@@ -110,7 +110,7 @@ func BenchmarkMmcloughlinDecode(b *testing.B) {
 
 func BenchmarkMmcloughlinNeighbors(b *testing.B) {
 	for b.Loop() {
-		fanixk_geohash.Neighbors(testGeohash)
+		mmcloughlin_geohash.Neighbors(testGeohash)
 	}
 }
 
