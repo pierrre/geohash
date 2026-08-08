@@ -155,8 +155,7 @@ func (r Range) Round() float64 {
 	return roundDecimal(r.Mid(), dec)
 }
 
-// Neighbors will contain the geohashes for the neighbors of the supplied
-// geohash in each of the cardinal and intercardinal directions.
+// Neighbors will contain the geohashes for the neighbors of the supplied geohash in each of the cardinal and intercardinal directions.
 type Neighbors struct {
 	North     string
 	NorthEast string
@@ -168,8 +167,7 @@ type Neighbors struct {
 	NorthWest string
 }
 
-// GetNeighbors returns a struct representing the [Neighbors] of the supplied
-// geohash in each of the cardinal and intercardinal directions.
+// GetNeighbors returns a struct representing the [Neighbors] of the supplied geohash in each of the cardinal and intercardinal directions.
 func GetNeighbors(gh string) (Neighbors, error) {
 	box, err := Decode(gh)
 	if err != nil {
