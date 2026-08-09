@@ -49,6 +49,8 @@ const encodeMaxPrecision = 32
 // Encode encodes a location to a geohash.
 //
 // The maximum supported precision is 32.
+//
+// If precision is less than or equal to 0, it returns an empty string.
 func Encode(lat, lon float64, precision int) string {
 	precision = min(max(precision, 0), encodeMaxPrecision)
 	var buf [encodeMaxPrecision]byte
