@@ -80,6 +80,8 @@ func Encode(lat, lon float64, precision int) string {
 }
 
 // Decode decodes a geohash to a [Box].
+//
+// An empty geohash returns the whole-world box (latitude -90 to 90, longitude -180 to 180) with a nil error.
 func Decode(gh string) (Box, error) {
 	box := defaultBox
 	even := true
