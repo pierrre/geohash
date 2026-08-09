@@ -50,9 +50,7 @@ const encodeMaxPrecision = 32
 //
 // The maximum supported precision is 32.
 func Encode(lat, lon float64, precision int) string {
-	if precision > encodeMaxPrecision {
-		precision = encodeMaxPrecision
-	}
+	precision = min(max(precision, 0), encodeMaxPrecision)
 	var buf [encodeMaxPrecision]byte
 	box := defaultBox
 	even := true

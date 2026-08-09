@@ -28,6 +28,18 @@ func TestEncodeMaxPrecision(t *testing.T) {
 	assert.StringLen(t, gh, encodeMaxPrecision)
 }
 
+func TestEncodePrecisionZero(t *testing.T) {
+	gh := Encode(testPoint.Lat, testPoint.Lon, 0)
+	assert.Equal(t, gh, "")
+}
+
+func TestEncodePrecisionNegative(t *testing.T) {
+	for _, precision := range []int{-1, -10, -100} {
+		gh := Encode(testPoint.Lat, testPoint.Lon, precision)
+		assert.Equal(t, gh, "")
+	}
+}
+
 func TestDecode(t *testing.T) {
 	box, err := Decode(testGeohash)
 	assert.NoError(t, err)
