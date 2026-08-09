@@ -60,10 +60,10 @@ var (
 func init() {
 	flag.IntVar(&flagPrecision, "precision", 0, "Precision")
 	flag.BoolVar(&flagRound, "round", true, "Round")
-	flag.Parse()
 }
 
 func main() {
+	flag.Parse()
 	if err := processSwitch(); err != nil {
 		panic(err)
 	}
@@ -109,6 +109,9 @@ func processStdin() error {
 	err := scanner.Err()
 	if err != nil {
 		return fmt.Errorf("scanner: %w", err)
+	}
+	if !first {
+		_, _ = fmt.Fprintln(os.Stdout)
 	}
 	return nil
 }
