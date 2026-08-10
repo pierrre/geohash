@@ -51,6 +51,12 @@ func TestDecodeInvalidCharacter(t *testing.T) {
 	assert.Error(t, err)
 }
 
+func TestDecodeEmpty(t *testing.T) {
+	box, err := Decode("")
+	assert.NoError(t, err)
+	assert.Equal(t, box, defaultBox)
+}
+
 func TestBoxCenter(t *testing.T) {
 	box := Box{
 		Lat: Range{
