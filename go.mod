@@ -8,12 +8,12 @@ require (
 	github.com/broady/gogeohash v0.0.0-20120525094510-7b2c40d64042
 	github.com/fanixk/geohash v0.0.0-20150324002647-c1f9b5fa157a
 	github.com/mmcloughlin/geohash v0.10.0
-	github.com/pierrre/assert v0.14.1
+	github.com/pierrre/assert v0.15.0
 	github.com/the42/cartconvert v1.0.0
 )
 
 require (
-	github.com/pierrre/compare v1.4.15 // indirect
-	github.com/pierrre/go-libs v0.33.0 // indirect
+	github.com/pierrre/compare v1.5.0 // indirect
+	github.com/pierrre/go-libs v0.34.2 // indirect
 	github.com/pierrre/pretty v0.25.1 // indirect
 )
