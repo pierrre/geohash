@@ -18,7 +18,6 @@ linters:
     - errname
     - errorlint
     - exhaustive
-    - forbidigo
     - forcetypeassert
     - gocheckcompilerdirectives
     - gochecksumtype
@@ -28,7 +27,6 @@ linters:
     - goprintffuncname
     - govet
     - grouper
-    - importas
     - inamedparam
     - ineffassign
     - interfacebloat
