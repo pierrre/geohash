@@ -95,7 +95,7 @@ generate::
 lint:
 	$(MAKE) golangci-lint
 	$(MAKE) lint-rules
-	$(MAKE) mod-tidy
+	$(MAKE) mod-tidy-diff
 
 # version:
 # - tag: vX.Y.Z
@@ -129,12 +129,12 @@ endif
 GOLANGCI_LINT_RUN=$(GOLANGCI_LINT_BIN)$(VERBOSE_FLAG) run
 .PHONY: golangci-lint
 golangci-lint: install-golangci-lint
-ifeq ($(CI),true)
 	$(GOLANGCI_LINT_RUN)
-else
-# Fix errors if possible.
-	$(GOLANGCI_LINT_RUN) --fix
-endif
+
+GOLANGCI_LINT_RUN_FIX=$(GOLANGCI_LINT_RUN) --fix
+.PHONY: golangci-lint-fix
+golangci-lint-fix: install-golangci-lint
+	$(GOLANGCI_LINT_RUN_FIX)
 
 .PHONY: golangci-lint-cache-clean
 golangci-lint-cache-clean: install-golangci-lint
@@ -180,11 +180,12 @@ mod-update-pierrre:
 MOD_TIDY=$(GO_MOD) tidy$(VERBOSE_FLAG)
 .PHONY: mod-tidy
 mod-tidy:
-ifeq ($(CI),true)
-	$(MOD_TIDY) -diff
-else
 	$(MOD_TIDY)
-endif
+
+MOD_TIDY_DIFF=$(MOD_TIDY) -diff
+.PHONY: mod-tidy-diff
+mod-tidy-diff:
+	$(MOD_TIDY_DIFF)
 
 .PHONY: git-latest-release
 git-latest-release:
