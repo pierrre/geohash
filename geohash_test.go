@@ -1,6 +1,7 @@
 package geohash
 
 import (
+	"math"
 	"testing"
 
 	"github.com/pierrre/assert"
@@ -38,6 +39,16 @@ func TestEncodePrecisionNegative(t *testing.T) {
 		gh := Encode(testPoint.Lat, testPoint.Lon, precision)
 		assert.Equal(t, gh, "")
 	}
+}
+
+func TestEncodeInf(t *testing.T) {
+	gh := Encode(math.Inf(1), math.Inf(-1), testPrecision)
+	assert.Equal(t, gh, "000000000000")
+}
+
+func TestEncodeNaN(t *testing.T) {
+	gh := Encode(math.NaN(), math.NaN(), testPrecision)
+	assert.Equal(t, gh, "000000000000")
 }
 
 func TestDecode(t *testing.T) {

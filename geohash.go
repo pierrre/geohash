@@ -14,11 +14,15 @@ import (
 
 const (
 	base32 = "0123456789bcdefghjkmnpqrstuvwxyz"
+	latMin = -90
+	latMax = 90
+	lonMin = -180
+	lonMax = 180
 )
 
 var (
 	base32Lookup [1 << 8]int
-	defaultBox   = Box{Lat: Range{Min: -90, Max: 90}, Lon: Range{Min: -180, Max: 180}}
+	defaultBox   = Box{Lat: Range{Min: latMin, Max: latMax}, Lon: Range{Min: lonMin, Max: lonMax}}
 )
 
 func init() {
@@ -50,6 +54,7 @@ const encodeMaxPrecision = 32
 //
 // The maximum supported precision is 32.
 func Encode(lat, lon float64, precision int) string {
+	lat, lon = normalize(lat, lon)
 	precision = min(max(precision, 0), encodeMaxPrecision)
 	var buf [encodeMaxPrecision]byte
 	box := defaultBox

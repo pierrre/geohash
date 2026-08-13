@@ -17,13 +17,13 @@ func roundDecimal(val float64, dec int) float64 {
 }
 
 func normalize(lat, lon float64) (latOut, lonOut float64) {
-	if lat > 90 || lat < -90 {
+	if lat > latMax || lat < latMin {
 		lat = center360(lat)
 		invertLon := true
 		switch {
-		case lat < -90:
+		case lat < latMin:
 			lat = -180 - lat
-		case lat > 90:
+		case lat > latMax:
 			lat = 180 - lat
 		default:
 			invertLon = false
@@ -36,7 +36,7 @@ func normalize(lat, lon float64) (latOut, lonOut float64) {
 			}
 		}
 	}
-	if lon > 180 || lon <= -180 {
+	if lon > lonMax || lon <= lonMin {
 		lon = center360(lon)
 	}
 	return lat, lon
