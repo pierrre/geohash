@@ -4,6 +4,7 @@
 NULL:=
 SPACE:=$(NULL) $(NULL)
 
+# Run all targets (build, test, lint).
 .PHONY: all
 all: build test lint
 
@@ -29,6 +30,7 @@ RACE_FLAG=
 endif
 
 VERSION?=$(shell (git describe --tags --exact-match 2> /dev/null || git rev-parse HEAD) | sed "s/^v//")
+# Print the current version.
 .PHONY: version
 version:
 	@echo $(VERSION)
@@ -51,6 +53,7 @@ GO_TAGS_FLAG=
 endif
 
 BUILD_DIR=build
+# Build the binaries in cmd/.
 .PHONY: build
 build:
 ifneq ($(wildcard ./cmd/*/*.go),)
@@ -76,6 +79,8 @@ TEST_COUNT_FLAG=$(SPACE)-count=$(TEST_COUNT)
 else
 TEST_COUNT_FLAG=
 endif
+# Run the tests.
+# Generate coverage reports when TEST_COVER is true.
 .PHONY: test
 test:
 	$(GO) test$(VERBOSE_FLAG)$(RACE_FLAG)$(TEST_FULLPATH_FLAG)$(GO_TAGS_FLAG)$(TEST_COVER_FLAGS)$(TEST_COUNT_FLAG) ./...
@@ -87,15 +92,25 @@ endif
 	$(GO_TOOL_COVER) -html=coverage.out -o=coverage.html
 endif
 
+# Run go generate.
 .PHONY: generate
 generate::
 	$(GO) generate$(VERBOSE_FLAG) ./...
 
+# Run the linters (golangci-lint, lint-rules, mod-tidy-diff). Does not modify files.
 .PHONY: lint
 lint:
 	$(MAKE) golangci-lint
 	$(MAKE) lint-rules
 	$(MAKE) mod-tidy-diff
+
+
+# Run the linters and auto-fix issues. Modifies files.
+.PHONY: lint-fix
+lint-fix:
+	$(MAKE) golangci-lint-fix
+	$(MAKE) lint-rules
+	$(MAKE) mod-tidy
 
 # version:
 # - tag: vX.Y.Z
@@ -115,6 +130,7 @@ GOLANGCI_LINT_BIN=$(GOLANGCI_LINT_DIR)/golangci-lint
 $(GOLANGCI_LINT_BIN):
 	curl$(VERBOSE_FLAG) -fL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh  | sh -s -- -b $(GOLANGCI_LINT_DIR) $(GOLANGCI_LINT_VERSION)
 
+# Install golangci-lint.
 .PHONY: install-golangci-lint
 install-golangci-lint: $(GOLANGCI_LINT_BIN)
 
@@ -127,19 +143,23 @@ install-golangci-lint:
 endif
 
 GOLANGCI_LINT_RUN=$(GOLANGCI_LINT_BIN)$(VERBOSE_FLAG) run
+# Run golangci-lint. Does not modify files.
 .PHONY: golangci-lint
 golangci-lint: install-golangci-lint
 	$(GOLANGCI_LINT_RUN)
 
 GOLANGCI_LINT_RUN_FIX=$(GOLANGCI_LINT_RUN) --fix
+# Run golangci-lint and auto-fix issues. Modifies files.
 .PHONY: golangci-lint-fix
 golangci-lint-fix: install-golangci-lint
 	$(GOLANGCI_LINT_RUN_FIX)
 
+# Clean the golangci-lint cache.
 .PHONY: golangci-lint-cache-clean
 golangci-lint-cache-clean: install-golangci-lint
 	$(GOLANGCI_LINT_BIN) cache clean
 
+# Check the project rules (disallowed/mandatory files, naming). Does not modify files.
 .PHONY: lint-rules
 CHECK_MISSING_FILE=@[ -e $(1) ] || (echo "$(1) file is missing" && false)
 lint-rules:
@@ -167,30 +187,36 @@ lint-rules:
 # - other directory: shouldn't be separated
 	@! find . -name "*.go" | (grep "[[:upper:]]" && echo "Incorrect file name case")
 
+# Update all dependencies. Modifies go.mod and go.sum.
 .PHONY: mod-update
 mod-update:
 	$(GO_GET) -u all
 	$(MAKE) mod-tidy
 
+# Update the github.com/pierrre dependencies. Modifies go.mod and go.sum.
 .PHONY: mod-update-pierrre
 mod-update-pierrre:
 	GOWORK=off $(GO_LIST) -m -u -json all | jq -r 'select(.Main==null and (.Path | startswith("github.com/pierrre/")) and .Update!=null) | .Path' | xargs -I {} -t $(GO_GET) -u {}
 	$(MAKE) mod-tidy
 
 MOD_TIDY=$(GO_MOD) tidy$(VERBOSE_FLAG)
+# Run go mod tidy. Modifies go.mod and go.sum.
 .PHONY: mod-tidy
 mod-tidy:
 	$(MOD_TIDY)
 
 MOD_TIDY_DIFF=$(MOD_TIDY) -diff
+# Check that go.mod and go.sum are tidy. Does not modify files.
 .PHONY: mod-tidy-diff
 mod-tidy-diff:
 	$(MOD_TIDY_DIFF)
 
+# Print the latest git release tag.
 .PHONY: git-latest-release
 git-latest-release:
 	@git tag --list --sort=v:refname --format="%(refname:short) => %(creatordate:short)" | tail -n 1
 
+# Clean the project (git clean, go clean, linter cache).
 .PHONY: clean
 clean:
 	git clean -fdX
@@ -206,6 +232,7 @@ GITHUB_TAG=$(shell echo $(GITHUB_REF) | grep -Po "^refs\/tags/\K.+")
 CI_LOG_GROUP_START=@echo "::group::$(1)"
 CI_LOG_GROUP_END=@echo "::endgroup::"
 
+# Run the CI pipeline.
 .PHONY: ci
 ci::
 	$(call CI_LOG_GROUP_START,env)
@@ -224,6 +251,7 @@ ci::
 	$(MAKE) lint
 	$(call CI_LOG_GROUP_END)
 
+# Print the environment.
 .PHONY: ci-env
 ci-env:
 	env
@@ -234,6 +262,7 @@ ci::
 	$(MAKE) ci-tag
 	$(call CI_LOG_GROUP_END)
 
+# Publish the tagged module.
 .PHONY: ci-tag
 ci-tag:
 	GOPROXY=proxy.golang.org $(GO_LIST) -x -m $(GO_MODULE)@$(GITHUB_TAG)
