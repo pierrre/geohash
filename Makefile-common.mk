@@ -116,7 +116,7 @@ lint-fix:
 # - tag: vX.Y.Z
 # - branch: master
 # - latest
-GOLANGCI_LINT_VERSION?=v2.12.2
+GOLANGCI_LINT_VERSION?=v2.13.1
 # Installation type:
 # - binary
 # - source
