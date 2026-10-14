@@ -10,8 +10,8 @@ github.com/mmcloughlin/geohash v0.10.0 h1:9w1HchfDfdeLc+jFEf/04D27KP7E2QmpDu52wP
 github.com/mmcloughlin/geohash v0.10.0/go.mod h1:oNZxQo5yWJh0eMQEP/8hwQuVx9Z9tjwFUqcTB1SmG0c=
 github.com/pierrre/assert v0.16.0 h1:wEcLpcXSPLoqvDy+HzDCwPkgxkZWeCiVF2bb/p+lMjA=
 github.com/pierrre/assert v0.16.0/go.mod h1:aZP7GSl8BO1DtFPn7qkdSC+G+QQe4IOSuJCZERonpBk=
-github.com/pierrre/compare v1.6.2 h1:tzsbxsr+y91UYhSdlgU9iD61Zj4ipIZf6oQ2Xi4nI78=
-github.com/pierrre/compare v1.6.2/go.mod h1:ap/TwCW7/7CPkjqAYL2JiGykMx0LLfeQf88q72XIkoE=
+github.com/pierrre/compare v1.6.3 h1:dvMXDmvo03XS+Bn+Aj1TwauZG561hJY/cirrGah1/PA=
+github.com/pierrre/compare v1.6.3/go.mod h1:BShKczlNinRBmYNOG5oepMn33AFGBQnBfxxZt7X002k=
 github.com/pierrre/go-libs v0.38.3 h1:NGyLHbax93Xkp8Y9IVzsHUkTLg9MONX9kliAWqt9oRU=
 github.com/pierrre/go-libs v0.38.3/go.mod h1:Ban4RTmOSs7Cm5NAeiLdliPin1bplcluC2NrkwcVr7o=
 github.com/pierrre/pretty v0.26.9 h1:CfTsd706wLY6U8T2xlwZLMJ/f2wKwsrrkALHRijSHPI=
