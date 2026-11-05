@@ -126,25 +126,21 @@ ifeq ($(filter binary source,$(GOLANGCI_LINT_TYPE)),)
 $(error invalid GOLANGCI_LINT_TYPE "$(GOLANGCI_LINT_TYPE)", must be "binary" or "source")
 endif
 
-# Binary install: prebuilt release, versioned dir.
+# Install golangci-lint from the prebuilt binary.
 GOLANGCI_LINT_BINARY_DIR=$(shell $(GO) env GOPATH)/pkg/golangci-lint/$(GOLANGCI_LINT_VERSION)
 GOLANGCI_LINT_BINARY_BIN=$(GOLANGCI_LINT_BINARY_DIR)/golangci-lint
-# Source install: go install, in GOBIN (or GOPATH/bin).
+$(GOLANGCI_LINT_BINARY_BIN):
+	curl$(VERBOSE_FLAG) -fL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(GOLANGCI_LINT_BINARY_DIR) $(GOLANGCI_LINT_VERSION)
+.PHONY: golangci-lint-install-binary
+golangci-lint-install-binary: $(GOLANGCI_LINT_BINARY_BIN)
+
+# Install golangci-lint from source.
 GOLANGCI_LINT_SOURCE_DIR=$(shell $(GO) env GOBIN)
 ifeq ($(GOLANGCI_LINT_SOURCE_DIR),)
 GOLANGCI_LINT_SOURCE_DIR=$(shell $(GO) env GOPATH)/bin
 endif
 GOLANGCI_LINT_SOURCE_BIN=$(GOLANGCI_LINT_SOURCE_DIR)/golangci-lint
 GOLANGCI_LINT_SOURCE_PACKAGE=github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
-
-$(GOLANGCI_LINT_BINARY_BIN):
-	curl$(VERBOSE_FLAG) -fL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(GOLANGCI_LINT_BINARY_DIR) $(GOLANGCI_LINT_VERSION)
-
-# Install golangci-lint from the prebuilt binary.
-.PHONY: golangci-lint-install-binary
-golangci-lint-install-binary: $(GOLANGCI_LINT_BINARY_BIN)
-
-# Install golangci-lint from source.
 .PHONY: golangci-lint-install-source
 golangci-lint-install-source:
 	$(GO_INSTALL) $(GOLANGCI_LINT_SOURCE_PACKAGE)
