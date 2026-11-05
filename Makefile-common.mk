@@ -38,6 +38,7 @@ version:
 GO?=go
 GO_RUN=$(GO) run$(VERBOSE_FLAG)$(RACE_FLAG)
 GO_GET=$(GO) get$(VERBOSE_FLAG)
+GO_INSTALL=$(GO) install$(VERBOSE_FLAG)
 GO_LIST=$(GO) list$(VERBOSE_FLAG)
 GO_MOD=$(GO) mod
 GO_TOOL=$(GO) tool
@@ -131,32 +132,34 @@ $(GOLANGCI_LINT_BIN):
 	curl$(VERBOSE_FLAG) -fL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh  | sh -s -- -b $(GOLANGCI_LINT_DIR) $(GOLANGCI_LINT_VERSION)
 
 # Install golangci-lint.
-.PHONY: install-golangci-lint
-install-golangci-lint: $(GOLANGCI_LINT_BIN)
+.PHONY: golangci-lint-install
+golangci-lint-install: $(GOLANGCI_LINT_BIN)
 
 else ifeq ($(GOLANGCI_LINT_TYPE),source)
 
-GOLANGCI_LINT_BIN=$(GO_RUN) github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
+GOLANGCI_LINT_BIN=$(shell $(GO) env GOBIN)/golangci-lint
 
-install-golangci-lint:
+GOLANGCI_LINT_PACKAGE=github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
+golangci-lint-install:
+	$(GO_INSTALL) $(GOLANGCI_LINT_PACKAGE)
 
 endif
 
 GOLANGCI_LINT_RUN=$(GOLANGCI_LINT_BIN)$(VERBOSE_FLAG) run
 # Run golangci-lint. Does not modify files.
 .PHONY: golangci-lint
-golangci-lint: install-golangci-lint
+golangci-lint: golangci-lint-install
 	$(GOLANGCI_LINT_RUN)
 
 GOLANGCI_LINT_RUN_FIX=$(GOLANGCI_LINT_RUN) --fix
 # Run golangci-lint and auto-fix issues. Modifies files.
 .PHONY: golangci-lint-fix
-golangci-lint-fix: install-golangci-lint
+golangci-lint-fix: golangci-lint-install
 	$(GOLANGCI_LINT_RUN_FIX)
 
 # Clean the golangci-lint cache.
 .PHONY: golangci-lint-cache-clean
-golangci-lint-cache-clean: install-golangci-lint
+golangci-lint-cache-clean: golangci-lint-install
 	$(GOLANGCI_LINT_BIN) cache clean
 
 # Check the project rules (disallowed/mandatory files, naming). Does not modify files.
